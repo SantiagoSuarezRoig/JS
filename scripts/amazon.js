@@ -1,39 +1,25 @@
-const products = [{
-    image: "images/products/athletic-cotton-socks-6-pairs.jpg",
-    name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
-    rating: {
-        count: 87,
-        stars: 4.5
-    },
-    priceCents: 1090
-},{ image: "images/products/intermediate-composite-basketball.jpg",
-    name: "Intermediate Size Basketball",
-    rating: {
-        count: 127,
-        stars: 4.0
-    },
-    priceCents: 2095
-},{ image: "images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg",
-    name: "Adults Plain Cotton T-Shirt - 2 Pack",
-    rating: {
-        count: 56,
-        stars: 4.5
-    },
-    priceCents: 799
-}]
-
-let createProduct = (nombre,imagen,ratingCount,ratingStars,precio) =>{
-    let newProduct = {
-        image: imagen,
-        name: nombre,
-        rating:{
-            count: ratingCount,
-            stars: ratingStars
-        },
-        priceCents: precio
-    }
-    return newProduct
+let randomNumber = (min,max)=>{
+   return Math.floor(Math.random()* (max-min+1) + min)
 }
+
+let randomStars = () => (0.5*randomNumber(5,10)).toFixed(1)
+let randomCount = () => randomNumber(50,100)
+let randomPrice = () => randomNumber(1000,2000)
+
+
+
+// let createProduct = (nombre,imagen,ratingCount,ratingStars,precio) =>{
+//     let newProduct = {
+//         image: imagen,
+//         name: nombre,
+//         rating:{
+//             count: ratingCount,
+//             stars: ratingStars
+//         },
+//         priceCents: precio
+//     }
+//     products.push(newProduct)
+// }
 
 
 const productsHTMLConteiner = document.querySelector(".products-grid")
@@ -95,7 +81,6 @@ let formHtmlProduct = product =>{
           `
     return HTML
 }
-
 
 
 let productsHTML = `` ;
