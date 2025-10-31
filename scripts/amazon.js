@@ -1,4 +1,4 @@
-import {cart} from '../data/cart.js' ; 
+import {cart, addToCart} from '../data/cart.js' ; 
 import {products} from '../data/products.js' ; 
 
 const productsHTMLConteiner = document.querySelector(".products-grid")
@@ -77,34 +77,37 @@ productsHTMLConteiner.innerHTML = productsHTML
 
 let BottonAddToCart = document.querySelectorAll(".add-to-cart-button")
 let quantityCartHTML = document.querySelector(".cart-quantity")
-let desaparicion = 0
 
 
-BottonAddToCart.forEach(boton=>{
+
+let desaparicionAddButton = 0
+
+function BuySignal(productId){
+  clearTimeout(desaparicionAddButton)
+  let addedToCart = document.querySelector(`.js-added-to-cart-${productId}`)
+  addedToCart.classList.add("addedOpacity")
+  desaparicionAddButton = setTimeout(()=>addedToCart.classList.remove("addedOpacity"),2000)
+}
+
+
+
+
+function updateCartQuantity(productId){
+  let quantity = parseInt(document.querySelector(`.js-quantity-selector-${productId}`).value)
+  quantityCartHTML.innerText = parseInt(quantityCartHTML.innerText) + quantity
+}
+
+
+
+
+BottonAddToCart.forEach(boton=>
   boton.addEventListener('click',()=>{
-    clearTimeout(desaparicion)
-
     let {productId} = boton.dataset
-    let quantity = parseInt(document.querySelector(`.js-quantity-selector-${productId}`).value)
-    let addedToCart = document.querySelector(`.js-added-to-cart-${productId}`)
-
-    addedToCart.classList.add("addedOpacity")
-    desaparicion = setTimeout(()=>addedToCart.classList.remove("addedOpacity"),2000)
-
-    
-    let i = 0
-    while(i < cart.length && cart[i].productId != productId)
-      i++
-    
-    if(i < cart.length) cart[i].quantity += quantity
-    else cart.push({productId, quantity})
-
-    quantityCartHTML.innerText = parseInt(quantityCartHTML.innerText) + quantity
-    
-
-    
+    BuySignal(productId)
+    addToCart(productId)
+    updateCartQuantity(productId)
     })
-  })
+)
 
 
 
