@@ -1,4 +1,4 @@
-import {cart, addToCart} from '../data/cart.js' ; 
+import {cart, addToCart, removeCartItem} from '../data/cart.js' ; 
 import {products} from '../data/products.js' ;
 import {formatCurrency} from './utils/money.js';
 
@@ -33,7 +33,8 @@ let formHtmlOrders = (product,cartItem) =>{
                   <span class="update-quantity-link link-primary">
                     Update
                   </span>
-                  <span class="delete-quantity-link link-primary">
+                  <span class="delete-quantity-link link-primary js-delete-link"
+                  data-product-id="${product.id}">
                     Delete
                   </span>
                 </div>
@@ -48,7 +49,7 @@ let formHtmlOrders = (product,cartItem) =>{
                 <div class="delivery-option">
                   <input type="radio" checked
                     class="delivery-option-input"
-                    name="delivery-option-${cartItem.productId}">
+                    name="delivery-option-${product.id}">
                   <div>
                     <div class="delivery-option-date">
                       Tuesday, June 21
@@ -61,7 +62,7 @@ let formHtmlOrders = (product,cartItem) =>{
                 <div class="delivery-option">
                   <input type="radio"
                     class="delivery-option-input"
-                    name="delivery-option-${cartItem.productId}">
+                    name="delivery-option-${product.id}">
                   <div>
                     <div class="delivery-option-date">
                       Wednesday, June 15
@@ -74,7 +75,7 @@ let formHtmlOrders = (product,cartItem) =>{
                 <div class="delivery-option">
                   <input type="radio"
                     class="delivery-option-input"
-                    name="delivery-option-${cartItem.productId}">
+                    name="delivery-option-${product.id}">
                   <div>
                     <div class="delivery-option-date">
                       Monday, June 13
@@ -99,9 +100,25 @@ let productOfId = (id) => {
     return products[i]
 }
 
-let ordersHTML = ``
-cart.forEach(cartItem =>{
-    ordersHTML += formHtmlOrders(productOfId(cartItem.productId),cartItem)
-})
-checkOutOrdersHTML.innerHTML = ordersHTML
+function renderOrders(){
+    let ordersHTML = ``
+    cart.forEach(cartItem =>{
+        ordersHTML += formHtmlOrders(productOfId(cartItem.productId),cartItem)
+    })
+    checkOutOrdersHTML.innerHTML = ordersHTML
+}
 
+renderOrders()
+
+
+let linksDelete = document.querySelectorAll(".js-delete-link")
+
+linksDelete.forEach(link =>
+    link.addEventListener('click', ()=>{
+        console.log("hola")
+        let {productId} = link.dataset
+        removeCartItem(productId)
+        renderOrders()
+        console.log(cart)
+    })
+)
