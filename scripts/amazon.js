@@ -92,11 +92,16 @@ function BuySignal(productId){
 
 
 
-function updateCartQuantity(productId){
-  let quantity = parseInt(document.querySelector(`.js-quantity-selector-${productId}`).value)
-  quantityCartHTML.innerText = parseInt(quantityCartHTML.innerText) + quantity
-}
+// function updateCartQuantity(productId){
+//   let quantity = parseInt(document.querySelector(`.js-quantity-selector-${productId}`).value)
+//   quantityCartHTML.innerText = parseInt(quantityCartHTML.innerText) + quantity
+// }
 
+function updateCartQuantity(){
+  let quantity = 0;
+  cart.forEach(cartItem => quantity += cartItem.quantity)
+  quantityCartHTML.innerText = quantity
+}
 
 
 
@@ -105,7 +110,8 @@ BottonAddToCart.forEach(boton=>
     let {productId} = boton.dataset
     BuySignal(productId)
     addToCart(productId)
-    updateCartQuantity(productId)
+    updateCartQuantity()
+    console.log(cart)
     })
 )
 

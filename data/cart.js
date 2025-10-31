@@ -10,5 +10,4 @@ export function addToCart(productId){
   
   if(i < cart.length) cart[i].quantity += quantity
   else cart.push({productId, quantity})
-
 }
