@@ -32,11 +32,16 @@ export function addToCart(productId){
 }
 
 
-export function removeCartItem(id){
-  cart = cart.filter(cartitem=> cartitem.productId !== id)
+
+export function calculateCartQuantity(){
   let i = 0
   cart.forEach(cartItem => i+= cartItem.quantity)
-  localStorage.setItem('quantity',JSON.stringify(i))
+  return i
+}
+
+export function removeCartItem(id){
+  cart = cart.filter(cartitem=> cartitem.productId !== id)
+  localStorage.setItem('quantity',JSON.stringify(calculateCartQuantity()))
   saveToStorage()
 }
 

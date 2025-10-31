@@ -116,6 +116,8 @@ function updateCheckOutItems(){
 
 
 
+
+
 updateCheckOutItems()
 renderOrders()
 let linksDelete = document.querySelectorAll(".js-delete-link")

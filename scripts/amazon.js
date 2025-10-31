@@ -1,4 +1,4 @@
-import {cart, addToCart} from '../data/cart.js' ; 
+import {cart, addToCart, calculateCartQuantity} from '../data/cart.js' ; 
 import {products} from '../data/products.js' ;
 import {formatCurrency} from './utils/money.js';
 
@@ -78,11 +78,11 @@ productsHTMLConteiner.innerHTML = productsHTML
 
 let BottonAddToCart = document.querySelectorAll(".add-to-cart-button")
 let quantityCartHTML = document.querySelector(".cart-quantity")
-quantityCartHTML.innerText = JSON.parse(localStorage.getItem('quantity'))
+quantityCartHTML.innerText = JSON.parse(localStorage.getItem('quantity')) == "0" ? "":JSON.parse(localStorage.getItem('quantity'))
+
 
 
 let desaparicionAddButton = 0
-
 function BuySignal(productId){
   clearTimeout(desaparicionAddButton)
   let addedToCart = document.querySelector(`.js-added-to-cart-${productId}`)
@@ -91,10 +91,8 @@ function BuySignal(productId){
 }
 
 
-export function updateCartQuantity(){
-  let quantity = 0;
-  cart.forEach(cartItem => quantity += cartItem.quantity)
-  localStorage.setItem('quantity',JSON.stringify(quantity))
+function updateCartQuantity(){
+  localStorage.setItem('quantity',JSON.stringify(calculateCartQuantity()))
   quantityCartHTML.innerText = JSON.parse(localStorage.getItem('quantity'))
 }
 
