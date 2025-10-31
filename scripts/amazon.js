@@ -1,5 +1,6 @@
 import {cart, addToCart} from '../data/cart.js' ; 
-import {products} from '../data/products.js' ; 
+import {products} from '../data/products.js' ;
+import {formatCurrency} from './utils/money.js';
 
 const productsHTMLConteiner = document.querySelector(".products-grid")
 
@@ -27,7 +28,7 @@ let formHtmlProduct = product =>{
           </div>
 
           <div class="product-price">
-            $${(product.priceCents / 100).toFixed(2)}
+            $${formatCurrency(product.priceCents)}
           </div>
 
 
