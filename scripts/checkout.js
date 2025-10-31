@@ -8,7 +8,7 @@ let checkOutOrdersHTML = document.querySelector(".order-summary")
 
 let formHtmlOrders = (product,cartItem) =>{
     let orderHTML = `
-        <div class="cart-item-container">
+        <div class="cart-item-container js-item-container-${product.id}">
             <div class="delivery-date">
               Delivery date: Tuesday, June 21
             </div>
@@ -118,7 +118,7 @@ linksDelete.forEach(link =>
         console.log("hola")
         let {productId} = link.dataset
         removeCartItem(productId)
-        renderOrders()
+        document.querySelector(`.js-item-container-${productId}`).remove()
         console.log(cart)
     })
 )
