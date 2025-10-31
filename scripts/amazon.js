@@ -1,25 +1,11 @@
-let randomNumber = (min,max)=>{
-   return Math.floor(Math.random()* (max-min+1) + min)
-}
-
-let randomStars = () => (0.5*randomNumber(5,10)).toFixed(1)
-let randomCount = () => randomNumber(50,100)
-let randomPrice = () => randomNumber(1000,2000)
-
-
-
-// let createProduct = (nombre,imagen,ratingCount,ratingStars,precio) =>{
-//     let newProduct = {
-//         image: imagen,
-//         name: nombre,
-//         rating:{
-//             count: ratingCount,
-//             stars: ratingStars
-//         },
-//         priceCents: precio
-//     }
-//     products.push(newProduct)
+// let randomNumber = (min,max)=>{
+//    return Math.floor(Math.random()* (max-min+1) + min)
 // }
+
+
+// let randomStars = () => (0.5*randomNumber(5,10)).toFixed(1)
+// let randomCount = () => randomNumber(50,100)
+// let randomPrice = () => randomNumber(1000
 
 
 const productsHTMLConteiner = document.querySelector(".products-grid")
@@ -69,14 +55,18 @@ let formHtmlProduct = product =>{
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart" data-product-id="${product.id}">
             <img src="images/icons/checkmark.png">
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary">
+          <button class="add-to-cart-button button-primary"
+          data-product-id="${product.id}">
             Add to Cart
           </button>
+
+
+
         </div> 
           `
     return HTML
@@ -89,3 +79,26 @@ products.forEach(product=>
 )
 
 productsHTMLConteiner.innerHTML = productsHTML
+
+
+
+let BottonAddToCart = document.querySelectorAll(".add-to-cart-button")
+
+
+
+
+BottonAddToCart.forEach(boton=>{
+  boton.addEventListener('click',()=>{
+    let productAddedID = boton.dataset.productId
+  
+    let i = 0
+    while(i < cart.length && cart[i].productId != productAddedID)
+      i++
+    
+    if(i<cart.length) cart[i].quantity++
+    else cart.push({productId: productAddedID, quantity: 1})
+    
+    console.log(cart)
+    })
+  })
+
