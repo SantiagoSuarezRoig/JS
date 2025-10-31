@@ -78,7 +78,7 @@ productsHTMLConteiner.innerHTML = productsHTML
 
 let BottonAddToCart = document.querySelectorAll(".add-to-cart-button")
 let quantityCartHTML = document.querySelector(".cart-quantity")
-
+quantityCartHTML.innerText = JSON.parse(localStorage.getItem('quantity'))
 
 
 let desaparicionAddButton = 0
@@ -91,18 +91,13 @@ function BuySignal(productId){
 }
 
 
-
-
-// function updateCartQuantity(productId){
-//   let quantity = parseInt(document.querySelector(`.js-quantity-selector-${productId}`).value)
-//   quantityCartHTML.innerText = parseInt(quantityCartHTML.innerText) + quantity
-// }
-
-function updateCartQuantity(){
+export function updateCartQuantity(){
   let quantity = 0;
   cart.forEach(cartItem => quantity += cartItem.quantity)
-  quantityCartHTML.innerText = quantity
+  localStorage.setItem('quantity',JSON.stringify(quantity))
+  quantityCartHTML.innerText = JSON.parse(localStorage.getItem('quantity'))
 }
+
 
 
 
@@ -112,10 +107,7 @@ BottonAddToCart.forEach(boton=>
     BuySignal(productId)
     addToCart(productId)
     updateCartQuantity()
-    console.log(cart)
     })
 )
-
-
 
 

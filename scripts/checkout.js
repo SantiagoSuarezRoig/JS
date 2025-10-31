@@ -108,16 +108,25 @@ function renderOrders(){
     checkOutOrdersHTML.innerHTML = ordersHTML
 }
 
+
+
+function updateCheckOutItems(){
+    document.querySelector('.js-amount-of-items').innerText = localStorage.getItem('quantity')
+}
+
+
+
+updateCheckOutItems()
 renderOrders()
-
-
 let linksDelete = document.querySelectorAll(".js-delete-link")
+
 
 linksDelete.forEach(link =>
     link.addEventListener('click', ()=>{
         console.log("hola")
         let {productId} = link.dataset
         removeCartItem(productId)
+        updateCheckOutItems()
         document.querySelector(`.js-item-container-${productId}`).remove()
         console.log(cart)
     })
