@@ -39,7 +39,7 @@ let formHtmlProduct = product =>{
 
 
          <div class="product-quantity-container">
-            <select>
+            <select class = "js-quantity-selector-${product.id}">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -55,7 +55,7 @@ let formHtmlProduct = product =>{
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart" data-product-id="${product.id}">
+          <div class="added-to-cart">
             <img src="images/icons/checkmark.png">
             Added
           </div>
@@ -83,22 +83,25 @@ productsHTMLConteiner.innerHTML = productsHTML
 
 
 let BottonAddToCart = document.querySelectorAll(".add-to-cart-button")
-let quantityCart = document.querySelector(".cart-quantity")
+let quantityCartHTML = document.querySelector(".cart-quantity")
 
 
 
 BottonAddToCart.forEach(boton=>{
   boton.addEventListener('click',()=>{
     let productAddedID = boton.dataset.productId
-  
+    let quantityAdded = parseInt(document.querySelector(`.js-quantity-selector-${productAddedID}`).value)
+    
     let i = 0
     while(i < cart.length && cart[i].productId != productAddedID)
       i++
     
-    if(i<cart.length) cart[i].quantity++
-    else cart.push({productId: productAddedID, quantity: 1})
+    if(i<cart.length) cart[i].quantity += quantityAdded
+    else cart.push({productId: productAddedID, quantity: quantityAdded})
 
-    quantityCart.innerText++
+    quantityCartHTML.innerText = parseInt(quantityCartHTML.innerText) + quantityAdded
+    
+
     console.log(cart)
     })
   })
