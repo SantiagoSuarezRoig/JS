@@ -1,12 +1,5 @@
-// let randomNumber = (min,max)=>{
-//    return Math.floor(Math.random()* (max-min+1) + min)
-// }
-
-
-// let randomStars = () => (0.5*randomNumber(5,10)).toFixed(1)
-// let randomCount = () => randomNumber(50,100)
-// let randomPrice = () => randomNumber(1000
-
+import {cart} from '../data/cart.js' ; 
+import {products} from '../data/products.js' ; 
 
 const productsHTMLConteiner = document.querySelector(".products-grid")
 
@@ -55,7 +48,7 @@ let formHtmlProduct = product =>{
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart js-added-to-cart-${product.id}">
             <img src="images/icons/checkmark.png">
             Added
           </div>
@@ -84,25 +77,32 @@ productsHTMLConteiner.innerHTML = productsHTML
 
 let BottonAddToCart = document.querySelectorAll(".add-to-cart-button")
 let quantityCartHTML = document.querySelector(".cart-quantity")
-
+let desaparicion = 0
 
 
 BottonAddToCart.forEach(boton=>{
   boton.addEventListener('click',()=>{
-    let productAddedID = boton.dataset.productId
-    let quantityAdded = parseInt(document.querySelector(`.js-quantity-selector-${productAddedID}`).value)
+    clearTimeout(desaparicion)
+
+    let {productId} = boton.dataset
+    let quantity = parseInt(document.querySelector(`.js-quantity-selector-${productId}`).value)
+    let addedToCart = document.querySelector(`.js-added-to-cart-${productId}`)
+
+    addedToCart.classList.add("addedOpacity")
+    desaparicion = setTimeout(()=>addedToCart.classList.remove("addedOpacity"),2000)
+
     
     let i = 0
-    while(i < cart.length && cart[i].productId != productAddedID)
+    while(i < cart.length && cart[i].productId != productId)
       i++
     
-    if(i<cart.length) cart[i].quantity += quantityAdded
-    else cart.push({productId: productAddedID, quantity: quantityAdded})
+    if(i < cart.length) cart[i].quantity += quantity
+    else cart.push({productId, quantity})
 
-    quantityCartHTML.innerText = parseInt(quantityCartHTML.innerText) + quantityAdded
+    quantityCartHTML.innerText = parseInt(quantityCartHTML.innerText) + quantity
     
 
-    console.log(cart)
+    
     })
   })
 
