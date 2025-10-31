@@ -83,7 +83,7 @@ productsHTMLConteiner.innerHTML = productsHTML
 
 
 let BottonAddToCart = document.querySelectorAll(".add-to-cart-button")
-
+let quantityCart = document.querySelector(".cart-quantity")
 
 
 
@@ -97,8 +97,12 @@ BottonAddToCart.forEach(boton=>{
     
     if(i<cart.length) cart[i].quantity++
     else cart.push({productId: productAddedID, quantity: 1})
-    
+
+    quantityCart.innerText++
     console.log(cart)
     })
   })
+
+
+
 
