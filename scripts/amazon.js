@@ -102,8 +102,9 @@ function updateCartQuantity(){
 BottonAddToCart.forEach(boton=>
   boton.addEventListener('click',()=>{
     let {productId} = boton.dataset
+    let quantity = parseInt(document.querySelector(`.js-quantity-selector-${productId}`).value)
     BuySignal(productId)
-    addToCart(productId)
+    addToCart(productId,quantity)
     updateCartQuantity()
     })
 )

@@ -12,14 +12,12 @@ if(!cart) cart = [{productId:"c2a82c5e-aff4-435f-9975-517cfaba2ece" , quantity:1
 
 function saveToStorage(){
   localStorage.setItem('cart',JSON.stringify(cart))
-
 }
 
 
 
 
-export function addToCart(productId){
-  let quantity = parseInt(document.querySelector(`.js-quantity-selector-${productId}`).value)
+export function addToCart(productId,quantity){
 
   let i = 0
   while(i < cart.length && cart[i].productId != productId)
@@ -27,7 +25,8 @@ export function addToCart(productId){
   
   if(i < cart.length) cart[i].quantity += quantity
   else cart.push({productId, quantity})
-
+  
+  localStorage.setItem('quantity',JSON.stringify(calculateCartQuantity()))
   saveToStorage()
 }
 
@@ -41,6 +40,7 @@ export function calculateCartQuantity(){
 
 export function removeCartItem(id){
   cart = cart.filter(cartitem=> cartitem.productId !== id)
+  document.querySelector(`.js-item-container-${id}`).remove()
   localStorage.setItem('quantity',JSON.stringify(calculateCartQuantity()))
   saveToStorage()
 }
