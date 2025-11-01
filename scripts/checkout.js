@@ -1,4 +1,4 @@
-import {cart, addToCart, removeCartItem} from '../data/cart.js' ; 
+import {cart, addToCart, removeCartItem,calculateCartQuantity} from '../data/cart.js' ; 
 import {products} from '../data/products.js' ;
 import {formatCurrency} from './utils/money.js';
 
@@ -132,7 +132,6 @@ linksDelete.forEach(link =>
         let {productId} = link.dataset
         removeCartItem(productId)
         updateCheckOutItems()
-        console.log(cart)
     })
 )
 
@@ -142,7 +141,13 @@ linksDelete.forEach(link =>
 
 let linksUpdate = document.querySelectorAll(".js-update-link")
 
+function changeQuantityOfProduct(productId,quantity){
+    let i = 0
+    while(cart[i].productId!= productId)
+        i++
 
+    cart[i].quantity = quantity
+}
 
 
 function changeDisplay(listElement){
@@ -154,7 +159,7 @@ function changeDisplay(listElement){
 }
 
 function updateNewQuantity(productId,currentQuantity,SaveButton,InputQuantity,UpdateButton){
-    if(InputQuantity.value == ""){
+    if(InputQuantity.value == "" || currentQuantity.innerText == InputQuantity.value){
         changeDisplay([currentQuantity,SaveButton,InputQuantity,UpdateButton])
         return;
     }
@@ -163,11 +168,12 @@ function updateNewQuantity(productId,currentQuantity,SaveButton,InputQuantity,Up
         updateCheckOutItems()
         return;
     }
-
     let quantity = parseInt(InputQuantity.value)
-    currentQuantity.innerText = quantity;
+    currentQuantity.innerText = quantity
+    changeQuantityOfProduct(productId,quantity)
     changeDisplay([currentQuantity,SaveButton,InputQuantity,UpdateButton])
-    addToCart(productId,quantity)
+    localStorage.setItem('quantity',JSON.stringify(calculateCartQuantity()))
+
     updateCheckOutItems()
     console.log(cart)
 }
