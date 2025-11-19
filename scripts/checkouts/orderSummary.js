@@ -10,6 +10,7 @@ import {deliveryDateOfId, deliveryOptions} from '../../data/deliveryOptions.js';
 let amountOfItemsHTML = document.querySelector('.js-amount-of-items')
 let checkOutOrdersHTML = document.querySelector(".order-summary")
 
+
 function changeDisplay(listElement){
     listElement.forEach(e =>{
         if(e.classList.contains('NoDisplayable'))
@@ -53,7 +54,7 @@ let formHtmlOrders = (product,cartItem) =>{
                   ${product.name}
                 </div>
                 <div class="product-price">
-                  $${formatCurrency(product.priceCents) * cartItem.quantity}
+                  $${formatCurrency(product.priceCents * cartItem.quantity)}
                 </div>
                 <div class="product-quantity">
                   <span>

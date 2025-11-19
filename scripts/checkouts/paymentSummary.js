@@ -1,9 +1,8 @@
 import {calculateHandlingMoney,calculateCartTotalMoney,calculateCartQuantity} from '../../data/cart.js'
 import { formatCurrency } from '../utils/money.js'
-import {OrdersPaymentHTML} from '../checkout.js'
 
 
-
+let OrdersPaymentHTML = document.querySelector(".payment-summary")
 
 export function renderPaymentSummary(){
   let totalEnvios = calculateHandlingMoney()

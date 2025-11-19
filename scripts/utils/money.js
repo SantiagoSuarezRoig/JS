@@ -1,2 +1,2 @@
-export const formatCurrency = price => (price/100).toFixed(2)
+export const formatCurrency = price => (Math.round(price)/100).toFixed(2)
 
