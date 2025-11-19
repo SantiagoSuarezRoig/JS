@@ -71,14 +71,13 @@ let productsHTML = `` ;
 products.forEach(product=>
     productsHTML += formHtmlProduct(product)
 )
-
 productsHTMLConteiner.innerHTML = productsHTML
 
 
 
 let BottonAddToCart = document.querySelectorAll(".add-to-cart-button")
 let quantityCartHTML = document.querySelector(".cart-quantity")
-quantityCartHTML.innerText = JSON.parse(localStorage.getItem('quantity')) == "0" ? "":JSON.parse(localStorage.getItem('quantity'))
+quantityCartHTML.innerText = calculateCartQuantity(JSON.parse(localStorage.getItem('cart'))) == "0" ? "":calculateCartQuantity(JSON.parse(localStorage.getItem('cart')))
 
 
 
@@ -92,8 +91,7 @@ function BuySignal(productId){
 
 
 function updateCartQuantity(){
-  localStorage.setItem('quantity',JSON.stringify(calculateCartQuantity()))
-  quantityCartHTML.innerText = JSON.parse(localStorage.getItem('quantity'))
+  quantityCartHTML.innerText = calculateCartQuantity(JSON.parse(localStorage.getItem('cart')))
 }
 
 

@@ -1,10 +1,18 @@
-import {cart, addToCart, removeCartItem,calculateCartQuantity} from '../data/cart.js' ; 
+import {cart, addToCart, removeCartItem, calculateCartQuantity, saveToStorage} from '../data/cart.js' ; 
 import {products} from '../data/products.js' ;
 import {formatCurrency} from './utils/money.js';
+import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
+import {deliveryOptions} from '../data/deliveryOptions.js';
+
+
+
+
 
 
 
 let checkOutOrdersHTML = document.querySelector(".order-summary")
+let amountOfItemsHTML = document.querySelector('.js-amount-of-items')
+
 
 let formHtmlOrders = (product,cartItem) =>{
     let orderHTML = `
@@ -48,54 +56,48 @@ let formHtmlOrders = (product,cartItem) =>{
                 <div class="delivery-options-title">
                   Choose a delivery option:
                 </div>
-
-
-                <div class="delivery-option">
-                  <input type="radio" checked
-                    class="delivery-option-input"
-                    name="delivery-option-${product.id}">
-                  <div>
-                    <div class="delivery-option-date">
-                      Tuesday, June 21
-                    </div>
-                    <div class="delivery-option-price">
-                      FREE Shipping
-                    </div>
-                  </div>
-                </div>
-                <div class="delivery-option">
-                  <input type="radio"
-                    class="delivery-option-input"
-                    name="delivery-option-${product.id}">
-                  <div>
-                    <div class="delivery-option-date">
-                      Wednesday, June 15
-                    </div>
-                    <div class="delivery-option-price">
-                      $4.99 - Shipping
-                    </div>
-                  </div>
-                </div>
-                <div class="delivery-option">
-                  <input type="radio"
-                    class="delivery-option-input"
-                    name="delivery-option-${product.id}">
-                  <div>
-                    <div class="delivery-option-date">
-                      Monday, June 13
-                    </div>
-                    <div class="delivery-option-price">
-                      $9.99 - Shipping
-                    </div>
-                  </div>
-                </div>
-
+                ${formHTMLdeliveryOptions(product,cartItem)}
               </div>
             </div>
           </div>`
 
     return orderHTML
 }
+
+
+let formHTMLdeliveryOptions = (product,cartItem) =>{
+  let HTML;
+  let today = dayjs()
+  
+  
+
+  deliveryOptions.forEach((deliveryOption)=>{
+
+    let dateString = today.add(deliveryOption.deliveryDays,'days').format('dddd, MMMM D')
+    let DeliveryPrice = deliveryOption.pricecents == 0 ? 'FREE': `$${formatCurrency(deliveryOption.pricecents)}`
+    let isChecked = deliveryOption.id === cartItem.deliveryOptionId
+    
+    HTML += 
+      `<div class="delivery-option">
+          <input type="radio"
+            'checked'
+            class="delivery-option-input"
+            name="delivery-option-${product.id}">
+          <div>
+            <div class="delivery-option-date">
+              ${dateString}
+            </div>
+            <div class="delivery-option-price">
+              ${DeliveryPrice} - Shipping
+            </div>
+          </div>
+        </div>`
+  })
+
+  return HTML
+}
+
+
 
 let productOfId = (id) => {
     let i = 0;
@@ -115,7 +117,7 @@ function renderOrders(){
 
 
 function updateCheckOutItems(){
-    document.querySelector('.js-amount-of-items').innerText = localStorage.getItem('quantity')
+    amountOfItemsHTML.innerText = calculateCartQuantity(JSON.parse(localStorage.getItem('cart')))
 }
 
 
@@ -124,6 +126,8 @@ function updateCheckOutItems(){
 
 updateCheckOutItems()
 renderOrders()
+
+
 let linksDelete = document.querySelectorAll(".js-delete-link")
 
 
@@ -145,7 +149,6 @@ function changeQuantityOfProduct(productId,quantity){
     let i = 0
     while(cart[i].productId!= productId)
         i++
-
     cart[i].quantity = quantity
 }
 
@@ -172,7 +175,6 @@ function updateNewQuantity(productId,currentQuantity,SaveButton,InputQuantity,Up
     currentQuantity.innerText = quantity
     changeQuantityOfProduct(productId,quantity)
     changeDisplay([currentQuantity,SaveButton,InputQuantity,UpdateButton])
-    localStorage.setItem('quantity',JSON.stringify(calculateCartQuantity()))
 
     updateCheckOutItems()
     console.log(cart)
@@ -195,7 +197,6 @@ linksUpdate.forEach(UpdateButton =>
             if(event.key == 'Enter')
                 updateNewQuantity(productId,currentQuantity,SaveButton,InputQuantity,UpdateButton)
         }
-            
         SaveButton.onclick = () =>
             updateNewQuantity(productId,currentQuantity,SaveButton,InputQuantity,UpdateButton)
         })
