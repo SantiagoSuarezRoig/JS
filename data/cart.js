@@ -1,3 +1,6 @@
+import {priceOfDeliveryOption} from './deliveryOptions.js'
+import {productPriceOfId} from './products.js'
+
 
 export let cart = JSON.parse(localStorage.getItem('cart')) 
 
@@ -31,6 +34,23 @@ export function addToCart(productId,quantity){
 }
 
 
+
+
+
+export function calculateHandlingMoney(){
+  let total = 0;
+  cart.forEach(cartitem => total += priceOfDeliveryOption(cartitem.deliveryOptionId))
+
+  return total
+}
+
+export function calculateCartTotalMoney(){
+  let total = 0;
+  cart.forEach(cartItem=>
+    total += cartItem.quantity * productPriceOfId(cartItem.productId)
+  )
+  return total
+}
 
 export function calculateCartQuantity(){
   let i = 0

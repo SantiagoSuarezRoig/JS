@@ -658,3 +658,11 @@ export const products = [
     ]
   }
 ];
+
+
+export function productPriceOfId(id){
+  let i = 0
+  while(products[i].id != id)
+    i++
+  return products[i].priceCents
+}

@@ -11,3 +11,12 @@ export const deliveryOptions = [{
     deliveryDays: 1,
     pricecents: 999
 }]
+
+
+
+export function priceOfDeliveryOption(deliveryOptionId){
+  let i = 0
+  while(deliveryOptions[i].id != deliveryOptionId)
+    i++
+  return deliveryOptions[i].pricecents
+}
