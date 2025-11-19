@@ -132,6 +132,15 @@ function renderOrders(){
         ordersHTML += formHtmlOrders(productOfId(cartItem.productId),cartItem)
     })
     checkOutOrdersHTML.innerHTML = ordersHTML
+
+    let deliveryOptionsUpdate = document.querySelectorAll('.js-deliveryOption')
+    deliveryOptionsUpdate.forEach((option)=>{
+      option.addEventListener('click',()=>{
+        const {productId, deliveryOptionId} = option.dataset
+        updateDeliveryOption(productId,deliveryOptionId)
+        renderOrders()
+      })
+})
 }
 
 
@@ -214,15 +223,5 @@ linksUpdate.forEach(UpdateButton =>
         })
 )
 
-console.log(cart)
 
-let deliveryOptionsUpdate = document.querySelectorAll('.js-deliveryOption')
 
-deliveryOptionsUpdate.forEach((option)=>{
-  option.addEventListener('click',()=>{
-    const {productId, deliveryOptionId} = option.dataset
-    updateDeliveryOption(productId,deliveryOptionId)
-    document.querySelector(`.js-delivery-date-${productId}`).innerText = 
-    `Delivery date: ${deliveryDateOfId(deliveryOptionId)}`
-  })
-})
