@@ -80,5 +80,3 @@ export function updateDeliveryOption(productId,deliveryOption){
   saveToStorage()
 }
 
-
-// localStorage.setItem('quantity',JSON.stringify(calculateCartQuantity()))
