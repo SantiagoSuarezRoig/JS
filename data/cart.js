@@ -1,5 +1,5 @@
 import {priceOfDeliveryOption} from './deliveryOptions.js'
-import {productPriceOfId} from './products.js'
+import {productOfId} from './products.js'
 
 
 export let cart = JSON.parse(localStorage.getItem('cart')) 
@@ -39,15 +39,15 @@ export function addToCart(productId,quantity){
 
 export function calculateHandlingMoney(){
   let total = 0;
-  cart.forEach(cartitem => total += priceOfDeliveryOption(cartitem.deliveryOptionId))
-
+  cart.forEach(cartItem =>
+    total += priceOfDeliveryOption(cartItem.deliveryOptionId))
   return total
 }
 
 export function calculateCartTotalMoney(){
   let total = 0;
   cart.forEach(cartItem=>
-    total += cartItem.quantity * productPriceOfId(cartItem.productId)
+    total += cartItem.quantity * productOfId(cartItem.productId).priceCents
   )
   return total
 }
@@ -64,7 +64,13 @@ export function removeCartItem(id){
   saveToStorage()
 }
 
-
+export function changeQuantityOfProduct(productId,quantity){
+    let i = 0
+    while(cart[i].productId!= productId)
+        i++
+    cart[i].quantity = quantity
+    saveToStorage()
+}
 
 export function updateDeliveryOption(productId,deliveryOption){
   let i = 0

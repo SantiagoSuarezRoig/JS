@@ -1,0 +1,120 @@
+import {cart, removeCartItem, calculateCartQuantity,changeQuantityOfProduct,updateDeliveryOption} from '../../data/cart.js' ; 
+import {productOfId} from '../../data/products.js' ;
+import {formatCurrency} from '../utils/money.js';
+import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
+import {deliveryDateOfId, deliveryOptions} from '../../data/deliveryOptions.js';
+
+
+
+let amountOfItemsHTML = document.querySelector('.js-amount-of-items')
+let checkOutOrdersHTML = document.querySelector(".order-summary")
+
+
+
+
+let formHtmlOrders = (product,cartItem) =>{
+  let dateOfDelivery = deliveryDateOfId(cartItem.deliveryOptionId)
+    let orderHTML = `
+        <div class="cart-item-container js-item-container-${product.id}">
+            <div class="delivery-date js-delivery-date-${product.id}">
+              Delivery date: ${dateOfDelivery}
+            </div>
+
+            <div class="cart-item-details-grid">
+
+
+              <img class="product-image"
+                src=${product.image}>
+
+              <div class="cart-item-details">
+                <div class="product-name">
+                  ${product.name}
+                </div>
+                <div class="product-price">
+                  $${formatCurrency(product.priceCents) * cartItem.quantity}
+                </div>
+                <div class="product-quantity">
+                  <span>
+                    Quantity: <span class="quantity-label js-quantity-label-${product.id}">${cartItem.quantity}</span>
+                  </span>
+                  <span class="update-quantity-link link-primary js-update-link"
+                  data-product-id= "${product.id}">
+                    Update
+                  </span>
+                  <input class="quantity-input-${product.id} quantity-input-Size NoDisplayable">
+                  <span class="save-quantity-input-${product.id} link-primary NoDisplayable">Save</span>
+
+                  <span class="delete-quantity-link link-primary js-delete-link"
+                  data-product-id="${product.id}">
+                    Delete
+                  </span>
+                </div>
+              </div>
+
+              <div class="delivery-options">
+                <div class="delivery-options-title">
+                  Choose a delivery option:
+                </div>
+                ${formHTMLdeliveryOptions(product,cartItem)}
+              </div>
+            </div>
+          </div>`
+
+    return orderHTML
+}
+
+
+let formHTMLdeliveryOptions = (product,cartItem) =>{
+  let HTML;
+  let today = dayjs()
+
+
+  deliveryOptions.forEach((deliveryOption)=>{
+    let dateString = today.add(deliveryOption.deliveryDays,'days').format('dddd, MMMM D')
+    let DeliveryPrice = deliveryOption.pricecents == 0 ? 'FREE': `$${formatCurrency(deliveryOption.pricecents)}`
+    let isChecked = deliveryOption.id === cartItem.deliveryOptionId
+    
+    HTML += 
+       `<div class="delivery-option
+       js-deliveryOption"
+       data-product-id="${product.id}"
+       data-delivery-option-id="${deliveryOption.id}">
+
+          <input type="radio"
+            ${isChecked ? "checked": ''}
+            class="delivery-option-input delivery-option-${product.id} data-product-id="${deliveryOption.id}""
+
+            name="delivery-option-${product.id}">
+
+          <div>
+            <div class="delivery-option-date">
+              ${dateString}
+            </div>
+            <div class="delivery-option-price">
+              ${DeliveryPrice} - Shipping
+            </div>
+          </div>
+
+
+        </div>`
+  })
+
+  return HTML
+}
+
+
+
+export function renderOrdersSummary(){
+    let ordersHTML = ``
+    
+    cart.forEach(cartItem =>{
+        ordersHTML += formHtmlOrders(productOfId(cartItem.productId),cartItem)
+    })
+    checkOutOrdersHTML.innerHTML = ordersHTML
+
+    amountOfItemsHTML.innerText = calculateCartQuantity(JSON.parse(localStorage.getItem('cart')))
+}
+
+
+
+

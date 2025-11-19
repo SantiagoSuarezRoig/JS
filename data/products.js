@@ -1,3 +1,14 @@
+
+export function productOfId(id){
+    let i = 0;
+    while(products[i].id != id)
+        i++
+    return products[i]
+}
+
+
+
+
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -660,9 +671,3 @@ export const products = [
 ];
 
 
-export function productPriceOfId(id){
-  let i = 0
-  while(products[i].id != id)
-    i++
-  return products[i].priceCents
-}
