@@ -2,13 +2,21 @@ import {priceOfDeliveryOption} from './deliveryOptions.js'
 import {productOfId} from './products.js'
 
 
-export let cart = JSON.parse(localStorage.getItem('cart')) 
+export let cart;
 
+export function loadCartFromStorage(){
 
-if(!cart) cart = [
+  cart = JSON.parse(localStorage.getItem('cart'))
+
+  if(!cart) cart = [
   {productId:"c2a82c5e-aff4-435f-9975-517cfaba2ece" , quantity:1, deliveryOptionId:'1'},
-  {productId:"6b07d4e7-f540-454e-8a1e-363f25dbae7d", quantity:2, deliveryOptionId:'2'}
-];
+  {productId:"6b07d4e7-f540-454e-8a1e-363f25dbae7d", quantity:1, deliveryOptionId:'2'}  
+  ];
+  
+}
+
+
+
 
 
 
@@ -29,6 +37,7 @@ export function addToCart(productId,quantity){
     i++
   
   if(i < cart.length) cart[i].quantity += quantity
+  
   else cart.push({productId, quantity, deliveryOptionId:'1'})
   saveToStorage()
 }
