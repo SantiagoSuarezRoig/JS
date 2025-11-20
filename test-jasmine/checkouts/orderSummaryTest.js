@@ -22,9 +22,7 @@ describe('test suite: renderOrderSummary',()=>{
         })
 
         loadCartFromStorage()
-
         renderOrdersSummary()
-        
     })
     
     afterEach(()=>{
@@ -32,7 +30,15 @@ describe('test suite: renderOrderSummary',()=>{
     })
 
     it('displays the cart',()=>{
+
+        expect(document.querySelector(`.js-product-name-${productId1}`).innerText)
+        .toEqual('Electric Glass and Steel Hot Tea Water Kettle - 1.7-Liter')
+
         expect(document.querySelectorAll('.js-cart-item-container').length).toEqual(2)
+
+
+        expect(document.querySelector(`.js-product-price-${productId1}`))
+
         expect(
             document.querySelector(`.js-product-quantity-${productId1}`)
             .innerText).toContain('Quantity: 2')
@@ -46,15 +52,21 @@ describe('test suite: renderOrderSummary',()=>{
 
     it('removes a product',()=>{
 
+
+
         document.querySelector(`.js-delete-link-${productId1}`).click()
+
         expect(document.querySelectorAll('.js-cart-item-container').length).toEqual(1)
         expect(
             document.querySelector(`.js-item-container-${productId1}`)
         ).toEqual(null)
-
+        
         expect(
             document.querySelector(`.js-item-container-${productId2}`)
         ).not.toEqual(null)
+
+        expect(document.querySelector(`.js-product-name-${productId2}`).innerText)
+        .toEqual('Ultra Soft Tissue 2-Ply - 18 Box')
 
         expect(cart.length).toEqual(1)
         expect(cart[0].productId).toEqual(productId2)

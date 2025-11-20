@@ -39,8 +39,8 @@ export function addToCart(productId,quantity){
     i++
   
   if(i < cart.length) cart[i].quantity += quantity
-  
   else cart.push({productId, quantity, deliveryOptionId:'1'})
+  
   saveToStorage()
 }
 
