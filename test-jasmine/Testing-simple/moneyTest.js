@@ -1,4 +1,4 @@
-import { formatCurrency } from '../scripts/utils/money.js'
+import { formatCurrency } from '../../scripts/utils/money.js'
 
 if(formatCurrency(2000)==='20.00'){
     console.log('passed')
