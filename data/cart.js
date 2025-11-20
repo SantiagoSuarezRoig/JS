@@ -4,6 +4,8 @@ import {productOfId} from './products.js'
 
 export let cart;
 
+loadCartFromStorage()
+
 export function loadCartFromStorage(){
 
   cart = JSON.parse(localStorage.getItem('cart'))
@@ -12,7 +14,7 @@ export function loadCartFromStorage(){
   {productId:"c2a82c5e-aff4-435f-9975-517cfaba2ece" , quantity:1, deliveryOptionId:'1'},
   {productId:"6b07d4e7-f540-454e-8a1e-363f25dbae7d", quantity:1, deliveryOptionId:'2'}  
   ];
-  
+
 }
 
 

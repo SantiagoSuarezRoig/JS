@@ -2,16 +2,13 @@ import {calculateHandlingMoney,calculateCartTotalMoney,calculateCartQuantity} fr
 import { formatCurrency } from '../utils/money.js'
 
 
-let OrdersPaymentHTML = document.querySelector(".payment-summary")
-
 export function renderPaymentSummary(){
   let totalEnvios = calculateHandlingMoney()
   let totalProductos = calculateCartTotalMoney()
   let totalFinal = totalEnvios + totalProductos
 
   let SummaryOrdersHTML = 
-          `
-          <div class="payment-summary-title">
+          `<div class="payment-summary-title">
             Order Summary
           </div>
 
@@ -45,7 +42,6 @@ export function renderPaymentSummary(){
           </button>
         </div>
       `
-
-    OrdersPaymentHTML.innerHTML = SummaryOrdersHTML
+    document.querySelector(".js-payment-summary").innerHTML = SummaryOrdersHTML
 }
 

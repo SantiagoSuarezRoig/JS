@@ -9,7 +9,7 @@ import {deliveryDateOfId, deliveryOptions} from '../../data/deliveryOptions.js';
 
 
 let amountOfItemsHTML = document.querySelector('.js-amount-of-items')
-let checkOutOrdersHTML = document.querySelector(".order-summary")
+
 
 
 function changeDisplay(listElement){
@@ -39,7 +39,9 @@ function updateNewQuantity(productId,currentQuantity,SaveButton,InputQuantity,Up
 let formHtmlOrders = (product,cartItem) =>{
   let dateOfDelivery = deliveryDateOfId(cartItem.deliveryOptionId)
     let orderHTML = `
-        <div class="cart-item-container js-item-container-${product.id}">
+        <div class="cart-item-container
+        js-cart-item-container
+        js-item-container-${product.id}">
             <div class="delivery-date js-delivery-date-${product.id}">
               Delivery date: ${dateOfDelivery}
             </div>
@@ -57,7 +59,7 @@ let formHtmlOrders = (product,cartItem) =>{
                 <div class="product-price">
                   $${formatCurrency(product.priceCents * cartItem.quantity)}
                 </div>
-                <div class="product-quantity">
+                <div class="product-quantity js-product-quantity-${product.id}">
                   <span>
                     Quantity: <span class="quantity-label js-quantity-label-${product.id}">${cartItem.quantity}</span>
                   </span>
@@ -68,7 +70,8 @@ let formHtmlOrders = (product,cartItem) =>{
                   <input class="quantity-input-${product.id} quantity-input-Size NoDisplayable">
                   <span class="save-quantity-input-${product.id} link-primary NoDisplayable">Save</span>
 
-                  <span class="delete-quantity-link link-primary js-delete-link"
+                  <span class="delete-quantity-link link-primary js-delete-link 
+                  js-delete-link-${product.id}"
                   data-product-id="${product.id}">
                     Delete
                   </span>
@@ -134,7 +137,7 @@ export function renderOrdersSummary(){
     cart.forEach(cartItem =>{
         ordersHTML += formHtmlOrders(productOfId(cartItem.productId),cartItem)
     })
-    checkOutOrdersHTML.innerHTML = ordersHTML
+    document.querySelector(".order-summary").innerHTML = ordersHTML
 
     let deliveryOptionsUpdate = document.querySelectorAll('.js-deliveryOption')
     deliveryOptionsUpdate.forEach((option)=>{
@@ -179,7 +182,7 @@ export function renderOrdersSummary(){
         })
         }
     )
-    
+
     renderHeader()
 }
 
