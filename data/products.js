@@ -721,6 +721,9 @@ export const products = [
     new Clothing(productDetails):new Product(productDetails) })
 
 
+// const hoy = new Date()
+// console.log(hoy)
+// console.log(hoy.toLocaleTimeString())
 
 
 

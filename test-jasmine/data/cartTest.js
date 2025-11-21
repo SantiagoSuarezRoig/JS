@@ -3,7 +3,6 @@ import {addToCart,cart,loadCartFromStorage, removeCartItem, updateDeliveryOption
 
 describe('test suite: addToCart',()=>{
 
-
     beforeEach(()=>{
         spyOn(localStorage,'setItem')
     })

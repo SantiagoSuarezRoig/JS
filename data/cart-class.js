@@ -96,11 +96,11 @@ class Cart {
 
 
 
-let cartPijin = new Cart('cart-Pijin')
-let cartBusiness = new Cart('cart-Pijin')
+// let cartPijin = new Cart('cart-Pijin')
+// let cartBusiness = new Cart('cart-Pijin')
 
 
-cartPijin.addToCart('b0f17cc5-8b40-4ca5-9142-b61fe3d98c85',1)
-console.log(cartPijin)
-console.log(cartBusiness)
-console.log(cartPijin instanceof Cart)
+// cartPijin.addToCart('b0f17cc5-8b40-4ca5-9142-b61fe3d98c85',1)
+// console.log(cartPijin)
+// console.log(cartBusiness)
+// console.log(cartPijin instanceof Cart)
