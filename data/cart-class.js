@@ -4,15 +4,15 @@ import {productOfId} from './products.js'
 
 class Cart {
     cartItems;
-    localStorageKey;
+    #localStorageKey;
 
     constructor(localStorageKey){
-        this.localStorageKey = localStorageKey;
-        this.loadCartFromStorage()
+        this.#localStorageKey = localStorageKey;
+        this.#loadCartFromStorage()
     }
 
-    loadCartFromStorage(){
-        this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey))
+    #loadCartFromStorage(){
+        this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey))
 
         if(!this.cartItems) this.cartItems = [
         {productId:"c2a82c5e-aff4-435f-9975-517cfaba2ece" , quantity:1, deliveryOptionId:'1'},
@@ -21,7 +21,7 @@ class Cart {
     }
 
     saveToStorage(){
-        localStorage.setItem(this.localStorageKey,JSON.stringify(this.cartItems))
+        localStorage.setItem(this.#localStorageKey,JSON.stringify(this.cartItems))
     }
 
     addToCart(productId,quantity){
