@@ -71,7 +71,10 @@ export function calculateCartQuantity(){
 
 export function removeCartItem(id){
   cart = cart.filter(cartitem=> cartitem.productId !== id)
-  document.querySelector(`.js-item-container-${id}`).remove()
+
+  if(document.querySelector(`.js-item-container-${id}`)!=null)
+    document.querySelector(`.js-item-container-${id}`).remove()
+  
   saveToStorage()
 }
 
@@ -84,9 +87,16 @@ export function changeQuantityOfProduct(productId,quantity){
 }
 
 export function updateDeliveryOption(productId,deliveryOption){
+
+  if(deliveryOption != '1' && deliveryOption != '2'&& deliveryOption != '3')
+    return;
+
   let i = 0
-  while(cart[i].productId != productId)
+  while(i<cart.length && cart[i].productId != productId)
     i++
+
+  if(i == cart.length) return;
+
   cart[i].deliveryOptionId = deliveryOption
   saveToStorage()
 }

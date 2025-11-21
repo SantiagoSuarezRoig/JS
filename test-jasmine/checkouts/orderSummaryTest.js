@@ -1,5 +1,6 @@
 import {renderOrdersSummary} from '../../scripts/checkouts/orderSummary.js'
 import {loadCartFromStorage,cart} from '../../data/cart.js'
+import { formatCurrency } from '../../scripts/utils/money.js'
 
 
 describe('test suite: renderOrderSummary',()=>{
@@ -37,7 +38,8 @@ describe('test suite: renderOrderSummary',()=>{
         expect(document.querySelectorAll('.js-cart-item-container').length).toEqual(2)
 
 
-        expect(document.querySelector(`.js-product-price-${productId1}`))
+        expect(document.querySelector(`.js-product-price-${productId1}`).innerText)
+        .toEqual(`$61.48`)
 
         expect(
             document.querySelector(`.js-product-quantity-${productId1}`)
@@ -68,8 +70,28 @@ describe('test suite: renderOrderSummary',()=>{
         expect(document.querySelector(`.js-product-name-${productId2}`).innerText)
         .toEqual('Ultra Soft Tissue 2-Ply - 18 Box')
 
+        expect(document.querySelector(`.js-product-price-${productId2}`).innerText)
+        .toEqual(`$71.22`)
+
+
         expect(cart.length).toEqual(1)
         expect(cart[0].productId).toEqual(productId2)
 
     })
+
+
+    it('Update the delivery option correctly',()=>{
+        document.querySelector(`.js-product-delivery-option-${productId1}-3`).click()
+
+        expect(document.querySelector(`.js-product-delivery-option-${productId1}-3`).checked)
+        .toEqual(true)
+
+        expect(cart.length).toEqual(2)
+        expect(cart[0].productId).toEqual('c2a82c5e-aff4-435f-9975-517cfaba2ece')
+        expect(cart[0].deliveryOptionId).toEqual('3')
+        expect(document.querySelector('.js-total-shipping').innerText).toEqual('$14.98')
+        expect(document.querySelector('.js-total-beforetax').innerText).toEqual('$147.68')
+    })
+
+
 })

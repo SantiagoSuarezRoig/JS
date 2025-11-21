@@ -103,13 +103,18 @@ let formHTMLdeliveryOptions = (product,cartItem) =>{
     
     HTML += 
        `<div class="delivery-option
+       
        js-deliveryOption"
+
        data-product-id="${product.id}"
        data-delivery-option-id="${deliveryOption.id}">
 
           <input type="radio"
             ${isChecked ? "checked": ''}
-            class="delivery-option-input delivery-option-${product.id} data-product-id="${deliveryOption.id}""
+            class="delivery-option-input
+            js-product-delivery-option-${product.id}-${deliveryOption.id}
+            delivery-option-${product.id}
+            data-product-id="${deliveryOption.id}""
 
             name="delivery-option-${product.id}">
 
