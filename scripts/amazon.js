@@ -2,9 +2,6 @@ import {cart, addToCart, calculateCartQuantity} from '../data/cart.js' ;
 import {products} from '../data/products.js' ;
 import {formatCurrency} from './utils/money.js';
 
-const productsHTMLConteiner = document.querySelector(".products-grid")
-
-
 
 let formHtmlProduct = product =>{
     let HTML = 
@@ -21,14 +18,14 @@ let formHtmlProduct = product =>{
 
           <div class="product-rating-container">
             <img class="product-rating-stars"
-              src="images/ratings/rating-${product.rating.stars * 10}.png">
+              src=${product.getStarsUrl()}>
             <div class="product-rating-count link-primary">
               ${product.rating.count}
             </div>
           </div>
 
           <div class="product-price">
-            $${formatCurrency(product.priceCents)}
+            ${product.getPriceUrl()}
           </div>
 
 
@@ -68,10 +65,11 @@ let formHtmlProduct = product =>{
 
 
 let productsHTML = `` ;
+
 products.forEach(product=>
     productsHTML += formHtmlProduct(product)
 )
-productsHTMLConteiner.innerHTML = productsHTML
+document.querySelector(".products-grid").innerHTML = productsHTML
 
 
 
@@ -96,7 +94,7 @@ function updateCartQuantity(){
 
 
 
-
+  
 BottonAddToCart.forEach(boton=>
   boton.addEventListener('click',()=>{
     let {productId} = boton.dataset
