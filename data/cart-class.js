@@ -22,7 +22,7 @@ export class Carrito {
         if(!this.cartItems){
             this.cartItems = [
             {productId:"c2a82c5e-aff4-435f-9975-517cfaba2ece" , quantity:1, deliveryOptionId:'1'},
-            {productId:"6b07d4e7-f540-454e-8a1e-363f25dbae7d", quantity:1, deliveryOptionId:'2'}  
+            {productId:"6b07d4e7-f540-454e-8a1e-363f25dbae7d", quantity:1, deliveryOptionId:'1'}  
             ];
             localStorage.setItem(this.#keyTotalItems,2)
             this.totalItems = 2;

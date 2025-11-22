@@ -8,6 +8,7 @@ import {deliveryDateOfId, deliveryOptions} from '../../data/deliveryOptions.js';
 
 
 
+
 let Cart = new Carrito('cart','TotalItems')
 
 
@@ -137,8 +138,8 @@ function updateNewQuantity(productId,currentQuantity,SaveButton,InputQuantity,Up
 
 export function renderOrdersSummary(){
     Cart = new Carrito('cart','TotalItems')
+
     let ordersHTML = ``
-    
     Cart.cartItems.forEach(cartItem =>{
         ordersHTML += formHtmlOrders(productOfId(cartItem.productId),cartItem)
     })
