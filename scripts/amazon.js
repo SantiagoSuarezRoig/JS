@@ -1,15 +1,26 @@
 import {Carrito} from '../data/cart-class.js' ; 
-import {products} from '../data/products.js' ;
+import {products,loadProducts} from '../data/products.js' ;
 
 
 
-let Cart = new Carrito('cart','TotalItems')
+loadProducts(renderProductsGrid)
 
 
-let formHtmlProduct = product =>{
-    let HTML = 
-           `<div class="product-container">
+let desaparicionAddButton = 0
+function BuySignal(productId){
+  clearTimeout(desaparicionAddButton)
+  document.querySelector(`.js-added-to-cart-${productId}`).classList.add("addedOpacity")
+  desaparicionAddButton =
+    setTimeout(()=>document.querySelector(`.js-added-to-cart-${productId}`).classList.remove("addedOpacity"),2000)
+}
 
+
+function renderProductsGrid(){
+  let Cart = new Carrito('cart','TotalItems')
+  let productsHTML = `` ;
+  products.forEach(product=>
+      productsHTML += `
+      <div class="product-container">
           <div class="product-image-container">
             <img class="product-image"
               src=${product.image}>
@@ -67,42 +78,27 @@ let formHtmlProduct = product =>{
 
 
 
-        </div> 
-          `
-    return HTML
-}
-
-let productsHTML = `` ;
-products.forEach(product=>
-    productsHTML += formHtmlProduct(product)
-)
-document.querySelector(".products-grid").innerHTML = productsHTML
+        </div> `
+  )
+  document.querySelector(".products-grid").innerHTML = productsHTML
 
 
-document.querySelector(".cart-quantity")
-.innerText = localStorage.getItem('TotalItems') == "0" ? "": localStorage.getItem('TotalItems')
+  document.querySelector(".cart-quantity")
+  .innerText = localStorage.getItem('TotalItems') == "0" ? "": localStorage.getItem('TotalItems')
 
-
-
-let desaparicionAddButton = 0
-function BuySignal(productId){
-  clearTimeout(desaparicionAddButton)
-  document.querySelector(`.js-added-to-cart-${productId}`).classList.add("addedOpacity")
-  desaparicionAddButton =
-    setTimeout(()=>document.querySelector(`.js-added-to-cart-${productId}`).classList.remove("addedOpacity"),2000)
+  document.querySelectorAll(".add-to-cart-button")
+  .forEach(boton=>
+    boton.addEventListener('click',()=>{
+      let {productId} = boton.dataset
+      let quantity = parseInt(document.querySelector(`.js-quantity-selector-${productId}`).value)
+      BuySignal(productId)
+      Cart.addToCart(productId,quantity)
+      document.querySelector(".cart-quantity").innerText = localStorage.getItem('TotalItems')
+      })
+  )
 }
 
 
 
 
-  
-document.querySelectorAll(".add-to-cart-button")
-.forEach(boton=>
-  boton.addEventListener('click',()=>{
-    let {productId} = boton.dataset
-    let quantity = parseInt(document.querySelector(`.js-quantity-selector-${productId}`).value)
-    BuySignal(productId)
-    Cart.addToCart(productId,quantity)
-    document.querySelector(".cart-quantity").innerText = localStorage.getItem('TotalItems')
-    })
-)
+
