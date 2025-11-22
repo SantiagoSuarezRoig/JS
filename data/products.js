@@ -1,6 +1,7 @@
 import {formatCurrency} from '../scripts/utils/money.js'
 
 
+
 export function productOfId(id){
     let i = 0;
     while(products[i].id != id)

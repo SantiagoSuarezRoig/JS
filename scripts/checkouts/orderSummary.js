@@ -24,7 +24,7 @@ let formHtmlOrders = (product,cartItem) =>{
             <div class="cart-item-details-grid">
 
 
-              <img class="product-image"
+              <img class="product-image js-product-image-${product.id}"
                 src=${product.image}>
 
               <div class="cart-item-details">
