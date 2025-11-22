@@ -78,8 +78,9 @@ document.querySelector(".products-grid").innerHTML = productsHTML
 
 
 let BottonAddToCart = document.querySelectorAll(".add-to-cart-button")
-let quantityCartHTML = document.querySelector(".cart-quantity")
-quantityCartHTML.innerText = calculateCartQuantity(JSON.parse(localStorage.getItem('cart'))) == "0" ? "":calculateCartQuantity(JSON.parse(localStorage.getItem('cart')))
+
+document.querySelector(".cart-quantity")
+.innerText = localStorage.getItem('TotalItems') == "0" ? "": localStorage.getItem('TotalItems')
 
 
 
@@ -93,7 +94,7 @@ function BuySignal(productId){
 
 
 function updateCartQuantity(){
-  quantityCartHTML.innerText = calculateCartQuantity(JSON.parse(localStorage.getItem('cart')))
+  quantityCartHTML.innerText = localStorage.getItem('TotalItems')
 }
 
 
@@ -108,5 +109,3 @@ BottonAddToCart.forEach(boton=>
     updateCartQuantity()
     })
 )
-
-
