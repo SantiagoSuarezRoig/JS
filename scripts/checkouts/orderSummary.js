@@ -57,7 +57,7 @@ let formHtmlOrders = (product,cartItem) =>{
                   ${product.name}
                 </div>
                 <div class="product-price js-product-price-${product.id}">
-                  $${formatCurrency(product.priceCents * cartItem.quantity)}
+                  $${formatCurrency.change(product.priceCents * cartItem.quantity)}
                 </div>
                 <div class="product-quantity js-product-quantity-${product.id}">
                   <span>
@@ -98,7 +98,7 @@ let formHTMLdeliveryOptions = (product,cartItem) =>{
 
   deliveryOptions.forEach((deliveryOption)=>{
     let dateString = today.add(deliveryOption.deliveryDays,'days').format('dddd, MMMM D')
-    let DeliveryPrice = deliveryOption.pricecents == 0 ? 'FREE': `$${formatCurrency(deliveryOption.pricecents)}`
+    let DeliveryPrice = deliveryOption.pricecents == 0 ? 'FREE': `$${formatCurrency.change(deliveryOption.pricecents)}`
     let isChecked = deliveryOption.id === cartItem.deliveryOptionId
     
     HTML += 

@@ -70,7 +70,6 @@ let formHtmlProduct = product =>{
 
 
 let productsHTML = `` ;
-
 products.forEach(product=>
     productsHTML += formHtmlProduct(product)
 )

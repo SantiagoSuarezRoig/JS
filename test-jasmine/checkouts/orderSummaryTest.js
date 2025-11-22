@@ -36,11 +36,8 @@ describe('test suite: renderOrderSummary',()=>{
         .toEqual('Electric Glass and Steel Hot Tea Water Kettle - 1.7-Liter')
 
         expect(document.querySelectorAll('.js-cart-item-container').length).toEqual(2)
-
-
         expect(document.querySelector(`.js-product-price-${productId1}`).innerText)
         .toEqual(`$61.48`)
-
         expect(
             document.querySelector(`.js-product-quantity-${productId1}`)
             .innerText).toContain('Quantity: 2')

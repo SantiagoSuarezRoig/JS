@@ -14,29 +14,29 @@ export function renderPaymentSummary(){
 
           <div class="payment-summary-row">
             <div>Items (${calculateCartQuantity()}):</div>
-            <div class="payment-summary-money">$${formatCurrency(totalProductos)}</div>
+            <div class="payment-summary-money">$${formatCurrency.change(totalProductos)}</div>
           </div>
 
           <div class="payment-summary-row">
             <div>Shipping &amp; handling:</div>
             <div class="payment-summary-money
-            js-total-shipping">$${formatCurrency(totalEnvios)}</div>
+            js-total-shipping">$${formatCurrency.change(totalEnvios)}</div>
           </div>
 
           <div class="payment-summary-row subtotal-row">
             <div>Total before tax:</div>
             <div class="payment-summary-money
-            js-total-beforetax">$${formatCurrency(totalFinal)}</div>
+            js-total-beforetax">$${formatCurrency.change(totalFinal)}</div>
           </div>
 
           <div class="payment-summary-row">
             <div>Estimated tax (10%):</div>
-            <div class="payment-summary-money">$${formatCurrency(totalFinal/10)}</div>
+            <div class="payment-summary-money">$${formatCurrency.change(totalFinal/10)}</div>
           </div>
 
           <div class="payment-summary-row total-row">
             <div>Order total:</div>
-            <div class="payment-summary-money">$${formatCurrency(totalFinal+totalFinal/10)}</div>
+            <div class="payment-summary-money">$${formatCurrency.change(totalFinal+totalFinal/10)}</div>
           </div>
 
           <button class="place-order-button button-primary">

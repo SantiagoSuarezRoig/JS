@@ -2,8 +2,6 @@ import {Car} from '../../data/car-oop.js'
 
 
 
-
-
 describe('test suite: car',()=>{
 
 

@@ -2,8 +2,10 @@ import {priceOfDeliveryOption} from './deliveryOptions.js'
 import {productOfId} from './products.js'
 
 
-class Cart {
+export class Cart {
     cartItems;
+    totalItems;
+    totalProducts;
     #localStorageKey;
 
     constructor(localStorageKey){
@@ -13,11 +15,14 @@ class Cart {
 
     #loadCartFromStorage(){
         this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey))
-
-        if(!this.cartItems) this.cartItems = [
-        {productId:"c2a82c5e-aff4-435f-9975-517cfaba2ece" , quantity:1, deliveryOptionId:'1'},
-        {productId:"6b07d4e7-f540-454e-8a1e-363f25dbae7d", quantity:1, deliveryOptionId:'2'}  
-        ];
+        if(!this.cartItems){
+            this.cartItems = [
+            {productId:"c2a82c5e-aff4-435f-9975-517cfaba2ece" , quantity:1, deliveryOptionId:'1'},
+            {productId:"6b07d4e7-f540-454e-8a1e-363f25dbae7d", quantity:1, deliveryOptionId:'2'}  
+            ];
+            
+            this.
+        }
     }
 
     saveToStorage(){
@@ -32,6 +37,7 @@ class Cart {
         if(i < this.cartItems.length) this.cartItems[i].quantity += quantity
         else this.cartItems.push({productId, quantity, deliveryOptionId:'1'})
         
+        this.totalQuantity += quantity
         this.saveToStorage()
     }
 
@@ -59,6 +65,8 @@ class Cart {
 
     removeCartItem(id){
         this.cartItems = this.cartItems.filter(cartitem=> cartitem.productId !== id)
+        let i = 0
+        
 
         if(document.querySelector(`.js-item-container-${id}`)!=null)
             document.querySelector(`.js-item-container-${id}`).remove()
@@ -96,11 +104,3 @@ class Cart {
 
 
 
-// let cartPijin = new Cart('cart-Pijin')
-// let cartBusiness = new Cart('cart-Pijin')
-
-
-// cartPijin.addToCart('b0f17cc5-8b40-4ca5-9142-b61fe3d98c85',1)
-// console.log(cartPijin)
-// console.log(cartBusiness)
-// console.log(cartPijin instanceof Cart)

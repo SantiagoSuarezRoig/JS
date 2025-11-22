@@ -32,7 +32,7 @@ export class Product{
   }
 
   getPriceUrl(){
-    return `$${formatCurrency(this.priceCents)}`
+    return `$${formatCurrency.change(this.priceCents)}`
   }
 
 
@@ -57,7 +57,7 @@ export class Clothing extends Product{
     super(productDetails);
     this.sizeChartLink = productDetails.sizeChartLink
   }
-  
+
   sizeChartLinkHTML(){
     return `<a href='${this.sizeChartLink}' target ='_blank'>Size Chart</a>`
   }
