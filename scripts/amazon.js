@@ -1,5 +1,9 @@
-import {addToCart, calculateCartQuantity} from '../data/cart.js' ; 
+import {Carrito} from '../data/cart-class.js' ; 
 import {products} from '../data/products.js' ;
+
+
+
+let Cart = new Carrito('cart','TotalItems')
 
 
 let formHtmlProduct = product =>{
@@ -68,16 +72,12 @@ let formHtmlProduct = product =>{
     return HTML
 }
 
-
 let productsHTML = `` ;
 products.forEach(product=>
     productsHTML += formHtmlProduct(product)
 )
 document.querySelector(".products-grid").innerHTML = productsHTML
 
-
-
-let BottonAddToCart = document.querySelectorAll(".add-to-cart-button")
 
 document.querySelector(".cart-quantity")
 .innerText = localStorage.getItem('TotalItems') == "0" ? "": localStorage.getItem('TotalItems')
@@ -87,25 +87,22 @@ document.querySelector(".cart-quantity")
 let desaparicionAddButton = 0
 function BuySignal(productId){
   clearTimeout(desaparicionAddButton)
-  let addedToCart = document.querySelector(`.js-added-to-cart-${productId}`)
-  addedToCart.classList.add("addedOpacity")
-  desaparicionAddButton = setTimeout(()=>addedToCart.classList.remove("addedOpacity"),2000)
+  document.querySelector(`.js-added-to-cart-${productId}`).classList.add("addedOpacity")
+  desaparicionAddButton =
+    setTimeout(()=>document.querySelector(`.js-added-to-cart-${productId}`).classList.remove("addedOpacity"),2000)
 }
 
-
-function updateCartQuantity(){
-  quantityCartHTML.innerText = localStorage.getItem('TotalItems')
-}
 
 
 
   
-BottonAddToCart.forEach(boton=>
+document.querySelectorAll(".add-to-cart-button")
+.forEach(boton=>
   boton.addEventListener('click',()=>{
     let {productId} = boton.dataset
     let quantity = parseInt(document.querySelector(`.js-quantity-selector-${productId}`).value)
     BuySignal(productId)
-    addToCart(productId,quantity)
-    updateCartQuantity()
+    Cart.addToCart(productId,quantity)
+    document.querySelector(".cart-quantity").innerText = localStorage.getItem('TotalItems')
     })
 )

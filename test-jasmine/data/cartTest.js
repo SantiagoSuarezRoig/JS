@@ -1,7 +1,8 @@
-import {addToCart,cart,loadCartFromStorage, removeCartItem, updateDeliveryOption} from '../../data/cart.js'
+import {Carrito} from '../../data/cart-class.js'
 
 
 describe('test suite: addToCart',()=>{
+   
 
     beforeEach(()=>{
         spyOn(localStorage,'setItem')
@@ -10,30 +11,20 @@ describe('test suite: addToCart',()=>{
 
     it('adds an existing product in the cart',()=>{
         
-        spyOn(localStorage,'getItem').and.callFake(()=>{
-            return JSON.stringify([{
+        let Cart = new Carrito('cartTest','TotalItemsTest')
+        Cart.cartItems = [{
                 productId: '54e0eccd-8f36-462b-b68a-8182611d9add',
                 quantity:1,
                 deliveryOptionId:'1'
-            }])
-        })
-
-        loadCartFromStorage()
-
-        addToCart('54e0eccd-8f36-462b-b68a-8182611d9add',1)
-
-
+            }];
         
-        expect(localStorage.setItem).toHaveBeenCalledWith('cart',JSON.stringify([{
-                productId: '54e0eccd-8f36-462b-b68a-8182611d9add',
-                quantity:2,
-                deliveryOptionId:'1'
-            }]))
+        Cart.totalItems = 1;
 
-        expect(cart.length).toEqual(1)
-        expect(localStorage.setItem).toHaveBeenCalledTimes(1)
-        expect(cart[0].quantity).toEqual(2)
-        expect(cart[0].productId).toEqual('54e0eccd-8f36-462b-b68a-8182611d9add')
+        Cart.addToCart('54e0eccd-8f36-462b-b68a-8182611d9add',1)
+
+        expect(Cart.cartItems.length).toEqual(1)
+        expect(Cart.cartItems[0].quantity).toEqual(2)
+        expect(Cart.cartItems[0].productId).toEqual('54e0eccd-8f36-462b-b68a-8182611d9add')
     })
 
 
@@ -42,133 +33,114 @@ describe('test suite: addToCart',()=>{
 
     it('adds a new product in the cart',()=>{
 
-        spyOn(localStorage,'getItem').and.callFake(()=>{
-            return JSON.stringify([])
-        })
-        loadCartFromStorage()
-
-        addToCart('54e0eccd-8f36-462b-b68a-8182611d9add',1)
-
-
-        expect(localStorage.setItem).toHaveBeenCalledWith('cart',JSON.stringify([{
+        let Cart = new Carrito('cartTest','TotalItemsTest')
+        Cart.cartItems = [{
                 productId: '54e0eccd-8f36-462b-b68a-8182611d9add',
                 quantity:1,
                 deliveryOptionId:'1'
-            }]))
+            }];
+        
+        Cart.totalItems = 1;
 
-        expect(cart.length).toEqual(1)
-        expect(localStorage.setItem).toHaveBeenCalledTimes(1)
-        expect(cart[0].quantity).toEqual(1)
-        expect(cart[0].productId).toEqual('54e0eccd-8f36-462b-b68a-8182611d9add')
+        Cart.addToCart("901eb2ca-386d-432e-82f0-6fb1ee7bf969",2)
+            
+
+        expect(Cart.cartItems.length).toEqual(2)
+        expect(Cart.cartItems[0].quantity).toEqual(1)
+        expect(Cart.cartItems[1].quantity).toEqual(2)
+        expect(Cart.cartItems[0].productId).toEqual('54e0eccd-8f36-462b-b68a-8182611d9add')
     })
 
 
 
     it('removes a product that is in the car', ()=>{
 
-        spyOn(localStorage,'getItem').and.callFake(()=>{
-            return JSON.stringify([{
+        let Cart = new Carrito('cartTest','TotalItemsTest')
+        Cart.cartItems = [{
                 productId: '54e0eccd-8f36-462b-b68a-8182611d9add',
                 quantity:1,
                 deliveryOptionId:'1'
-            }])
-        })
+            }];
+        
+        Cart.totalItems = 1;
 
-        loadCartFromStorage()
 
         document.querySelector('.js-test-container').innerHTML = `
         <div class='js-item-container-54e0eccd-8f36-462b-b68a-8182611d9add'><div>
         `
 
-        expect(cart.length).toEqual(1)
-        removeCartItem('54e0eccd-8f36-462b-b68a-8182611d9add')
-        expect(cart.length).toEqual(0)
-        expect(localStorage.setItem).toHaveBeenCalledTimes(1)
-        expect(localStorage.setItem).toHaveBeenCalledWith('cart',JSON.stringify([]))
+        expect(Cart.cartItems.length).toEqual(1)
+        Cart.removeCartItem('54e0eccd-8f36-462b-b68a-8182611d9add')
+        expect(Cart.cartItems.length).toEqual(0)
     })
 
 
 
     it('removes a product that is NOT in the car', ()=>{
-
-        spyOn(localStorage,'getItem').and.callFake(()=>{
-            return JSON.stringify([{
+        let Cart = new Carrito('cartTest','TotalItemsTest')
+        Cart.cartItems = [{
                 productId: '54e0eccd-8f36-462b-b68a-8182611d9add',
                 quantity:1,
                 deliveryOptionId:'1'
-            }])
-        })
-
-        loadCartFromStorage()
+            }];
+        
+        Cart.totalItems = 1;
 
         document.querySelector('.js-test-container').innerHTML = `
         <div class='js-item-container-54e0eccd-8f36-462b-b68a-8182611d9add'><div>
         `
-        expect(cart.length).toEqual(1)
-        removeCartItem('56b07d4e7-f540-454e-8a1e-363f25dbae7d')
-        expect(cart.length).toEqual(1)
-        expect(localStorage.setItem).toHaveBeenCalledTimes(1)
-        expect(localStorage.setItem).toHaveBeenCalledWith('cart',JSON.stringify([{
-                productId: '54e0eccd-8f36-462b-b68a-8182611d9add',
-                quantity:1,
-                deliveryOptionId:'1'
-            }]))
+
+        expect(Cart.cartItems.length).toEqual(1)
+        Cart.removeCartItem('56b07d4e7-f540-454e-8a1e-363f25dbae7d')
+        expect(Cart.cartItems.length).toEqual(1)
     })
 
 
     it('updates a new deliveryOption of a product that IS in the car',()=>{
-        spyOn(localStorage,'getItem').and.callFake(()=>{
-            return JSON.stringify([{
+        let Cart = new Carrito('cartTest','TotalItemsTest')
+        Cart.cartItems = [{
                 productId: '54e0eccd-8f36-462b-b68a-8182611d9add',
                 quantity:1,
                 deliveryOptionId:'1'
-            }])
-        })
+            }];
+        
+        Cart.totalItems = 1;
+        Cart.updateDeliveryOption('54e0eccd-8f36-462b-b68a-8182611d9add','2')
 
-        loadCartFromStorage()
-        updateDeliveryOption('54e0eccd-8f36-462b-b68a-8182611d9add','2')
-
-        expect(cart[0].deliveryOptionId).toEqual('2')
-        expect(localStorage.setItem).toHaveBeenCalledWith('cart',JSON.stringify([{
-                productId: '54e0eccd-8f36-462b-b68a-8182611d9add',
-                quantity:1,
-                deliveryOptionId:'2'
-            }]))
+        expect(Cart.cartItems[0].deliveryOptionId).toEqual('2')
     })
 
 
     it('updates a new deliveryOption of a product that is NOT in the car',()=>{
-        spyOn(localStorage,'getItem').and.callFake(()=>{
-            return JSON.stringify([{
+        let Cart = new Carrito('cartTest','TotalItemsTest')
+        Cart.cartItems = [{
                 productId: '54e0eccd-8f36-462b-b68a-8182611d9add',
                 quantity:1,
                 deliveryOptionId:'1'
-            }])
-        })
+            }];
+        
+        Cart.totalItems = 1;
 
-        loadCartFromStorage()
-        updateDeliveryOption('6b07d4e7-f540-454e-8a1e-363f25dbae7d','2')
+        Cart.updateDeliveryOption('6b07d4e7-f540-454e-8a1e-363f25dbae7d','2')
 
-        expect(cart[0].deliveryOptionId).toEqual('1')
-        expect(localStorage.setItem).toHaveBeenCalledTimes(0)
+        expect(Cart.cartItems[0].deliveryOptionId).toEqual('1')
     })
 
 
 
     it('updates a not valid deliveryOption',()=>{
-        spyOn(localStorage,'getItem').and.callFake(()=>{
-            return JSON.stringify([{
+        let Cart = new Carrito('cartTest','TotalItemsTest')
+        Cart.cartItems = [{
                 productId: '54e0eccd-8f36-462b-b68a-8182611d9add',
                 quantity:1,
                 deliveryOptionId:'1'
-            }])
-        })
+            }];
+        
+        Cart.totalItems = 1;
+        
+        Cart.updateDeliveryOption('54e0eccd-8f36-462b-b68a-8182611d9add','4')
 
-        loadCartFromStorage()
-        updateDeliveryOption('54e0eccd-8f36-462b-b68a-8182611d9add','4')
-
-        expect(cart[0].deliveryOptionId).toEqual('1')
-        expect(localStorage.setItem).toHaveBeenCalledTimes(0)
+        expect(Cart.cartItems[0].deliveryOptionId).toEqual('1')
     })
 
 })

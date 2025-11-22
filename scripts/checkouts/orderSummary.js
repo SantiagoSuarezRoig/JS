@@ -1,4 +1,4 @@
-import {cart, removeCartItem, calculateCartQuantity,changeQuantityOfProduct,updateDeliveryOption} from '../../data/cart.js' ; 
+import {Carrito} from '../../data/cart-class.js' ; 
 import {productOfId} from '../../data/products.js' ;
 import {formatCurrency} from '../utils/money.js';
 import {renderPaymentSummary} from './paymentSummary.js'
@@ -8,32 +8,7 @@ import {deliveryDateOfId, deliveryOptions} from '../../data/deliveryOptions.js';
 
 
 
-let amountOfItemsHTML = document.querySelector('.js-amount-of-items')
-
-
-
-function changeDisplay(listElement){
-    listElement.forEach(e =>{
-        if(e.classList.contains('NoDisplayable'))
-            e.classList.remove('NoDisplayable')
-        else e.classList.add('NoDisplayable')
-    })
-}
-
-function updateNewQuantity(productId,currentQuantity,SaveButton,InputQuantity,UpdateButton){
-    if(InputQuantity.value == "" || currentQuantity.innerText == InputQuantity.value){
-        changeDisplay([currentQuantity,SaveButton,InputQuantity,UpdateButton])
-        return;
-    }
-    if(InputQuantity.value == "0"){
-        removeCartItem(productId)
-        return;
-    }
-    let quantity = parseInt(InputQuantity.value)
-    currentQuantity.innerText = quantity
-    changeQuantityOfProduct(productId,quantity)
-    changeDisplay([currentQuantity,SaveButton,InputQuantity,UpdateButton])
-}
+let Cart = new Carrito('cart','TotalItems')
 
 
 let formHtmlOrders = (product,cartItem) =>{
@@ -82,7 +57,9 @@ let formHtmlOrders = (product,cartItem) =>{
                 <div class="delivery-options-title">
                   Choose a delivery option:
                 </div>
-                ${formHTMLdeliveryOptions(product,cartItem)}
+
+              ${formHTMLdeliveryOptions(product,cartItem)}
+              
               </div>
             </div>
           </div>`
@@ -135,37 +112,64 @@ let formHTMLdeliveryOptions = (product,cartItem) =>{
 }
 
 
+function changeDisplay(listElement){
+    listElement.forEach(e =>{
+        if(e.classList.contains('NoDisplayable'))
+            e.classList.remove('NoDisplayable')
+        else e.classList.add('NoDisplayable')
+    })
+}
+
+function updateNewQuantity(productId,currentQuantity,SaveButton,InputQuantity,UpdateButton){
+    if(InputQuantity.value == "" || currentQuantity.innerText == InputQuantity.value){
+        changeDisplay([currentQuantity,SaveButton,InputQuantity,UpdateButton])
+        return;
+    }
+    if(InputQuantity.value == "0"){
+        Cart.removeCartItem(productId)
+        return;
+    }
+    let quantity = parseInt(InputQuantity.value)
+    currentQuantity.innerText = quantity
+    Cart.changeQuantityOfProduct(productId,quantity)
+    changeDisplay([currentQuantity,SaveButton,InputQuantity,UpdateButton])
+}
 
 export function renderOrdersSummary(){
+    Cart = new Carrito('cart','TotalItems')
     let ordersHTML = ``
     
-    cart.forEach(cartItem =>{
+    Cart.cartItems.forEach(cartItem =>{
         ordersHTML += formHtmlOrders(productOfId(cartItem.productId),cartItem)
     })
     document.querySelector(".order-summary").innerHTML = ordersHTML
 
-    let deliveryOptionsUpdate = document.querySelectorAll('.js-deliveryOption')
-    deliveryOptionsUpdate.forEach((option)=>{
-    option.addEventListener('click',()=>{
+
+  
+    document.querySelectorAll('.js-deliveryOption').
+    forEach( option =>{
+      option.addEventListener('click',()=>{
         const {productId, deliveryOptionId} = option.dataset
-        updateDeliveryOption(productId,deliveryOptionId)
+        Cart.updateDeliveryOption(productId,deliveryOptionId)
         renderOrdersSummary()
         renderPaymentSummary()
-    })
+      })
     })
 
-    let linksDelete = document.querySelectorAll(".js-delete-link")
-    linksDelete.forEach(link =>
+    
+    document.querySelectorAll(".js-delete-link")
+    .forEach(link =>
         link.addEventListener('click', ()=>{
             let {productId} = link.dataset
-            removeCartItem(productId)
+            Cart.removeCartItem(productId)
             renderOrdersSummary()
             renderPaymentSummary()
         })
     )
 
-    let linksUpdate = document.querySelectorAll(".js-update-link")
-    linksUpdate.forEach(UpdateButton =>{
+  
+    document.querySelectorAll(".js-update-link")
+    .forEach(UpdateButton =>{
         UpdateButton.addEventListener('click', ()=>{
             let {productId} = UpdateButton.dataset
             let currentQuantity = document.querySelector(`.js-quantity-label-${productId}`)
@@ -174,15 +178,15 @@ export function renderOrdersSummary(){
             changeDisplay([UpdateButton,SaveButton,InputQuantity,currentQuantity])
             InputQuantity.onkeydown = (event) => {
                 if(event.key == 'Enter'){
-                updateNewQuantity(productId,currentQuantity,SaveButton,InputQuantity,UpdateButton)
-                    renderOrdersSummary()
-                    renderPaymentSummary()
+                  updateNewQuantity(productId,currentQuantity,SaveButton,InputQuantity,UpdateButton)
+                  renderOrdersSummary()
+                  renderPaymentSummary()
                 }
             }
             SaveButton.onclick = () =>{
-            updateNewQuantity(productId,currentQuantity,SaveButton,InputQuantity,UpdateButton)
-            renderOrdersSummary()
-            renderPaymentSummary()
+              updateNewQuantity(productId,currentQuantity,SaveButton,InputQuantity,UpdateButton)
+              renderOrdersSummary()
+              renderPaymentSummary()
             }
         })
         }

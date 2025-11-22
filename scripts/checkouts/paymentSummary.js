@@ -1,10 +1,12 @@
-import {calculateHandlingMoney,calculateCartTotalMoney,calculateCartQuantity} from '../../data/cart.js'
-import { formatCurrency } from '../utils/money.js'
+import {Carrito} from '../../data/cart-class.js'
+import {formatCurrency} from '../utils/money.js'
+
 
 
 export function renderPaymentSummary(){
-  let totalEnvios = calculateHandlingMoney()
-  let totalProductos = calculateCartTotalMoney()
+  let Cart = new Carrito('cart','TotalItems')
+  let totalEnvios = Cart.calculateHandlingMoney()
+  let totalProductos = Cart.calculateCartTotalMoney()
   let totalFinal = totalEnvios + totalProductos
 
   let SummaryOrdersHTML = 
@@ -13,7 +15,7 @@ export function renderPaymentSummary(){
           </div>
 
           <div class="payment-summary-row">
-            <div>Items (${calculateCartQuantity()}):</div>
+            <div>Items (${Cart.totalItems}):</div>
             <div class="payment-summary-money">$${formatCurrency.change(totalProductos)}</div>
           </div>
 
@@ -44,6 +46,6 @@ export function renderPaymentSummary(){
           </button>
         </div>
       `
-    document.querySelector(".js-payment-summary").innerHTML = SummaryOrdersHTML
+  document.querySelector(".js-payment-summary").innerHTML = SummaryOrdersHTML
 }
 
