@@ -100,7 +100,7 @@ export function loadProducts(fun){
       return new Appliance(productDetails)
 
       return new Product(productDetails)})
-      
+      console.log('loadProducts')
       fun()
   })
 
