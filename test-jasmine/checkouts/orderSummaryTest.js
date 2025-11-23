@@ -1,6 +1,6 @@
 import {renderOrdersSummary} from '../../scripts/checkouts/orderSummary.js'
 import {Carrito} from '../../data/cart-class.js'
-import { loadProducts, productOfId } from '../../data/products.js'
+import {loadProductsFetch, loadProducts, productOfId } from '../../data/products.js'
 import { deliveryOptions } from '../../data/deliveryOptions.js'
 import { cart } from '../../data/cart.js'
 
@@ -11,7 +11,7 @@ describe('test suite: renderOrderSummary',()=>{
     
 
     beforeAll((done)=>{
-        loadProducts(()=>{
+        loadProductsFetch().then(()=>{
             done();
         })
     })
