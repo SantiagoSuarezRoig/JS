@@ -13,18 +13,18 @@ new Promise((resolve)=>{
 
 
 
-let desaparicionAddButton = 0
+
 function BuySignal(productId){
-  clearTimeout(desaparicionAddButton)
   document.querySelector(`.js-added-to-cart-${productId}`).classList.add("addedOpacity")
-  desaparicionAddButton =
-    setTimeout(()=>document.querySelector(`.js-added-to-cart-${productId}`).classList.remove("addedOpacity"),2000)
+  return setTimeout(()=>{
+      document.querySelector(`.js-added-to-cart-${productId}`).classList.remove("addedOpacity")       
+    }, 2000)
 }
 
 
 function renderProductsGrid(){
   let Cart = new Carrito('cart','TotalItems')
-  let productsHTML = `` ;
+  let productsHTML = '';
   products.forEach(product=>
       productsHTML += `
       <div class="product-container">
@@ -94,14 +94,17 @@ function renderProductsGrid(){
   .innerText = localStorage.getItem('TotalItems') == "0" ? "": localStorage.getItem('TotalItems')
 
   document.querySelectorAll(".add-to-cart-button")
-  .forEach(boton=>
-    boton.addEventListener('click',()=>{
+  .forEach(boton=>{
+    let clearTime= 0;
+    boton.addEventListener('click',()=>{ 
       let {productId} = boton.dataset
       let quantity = parseInt(document.querySelector(`.js-quantity-selector-${productId}`).value)
-      BuySignal(productId)
+      clearTimeout(clearTime)
+      clearTime = BuySignal(productId)
       Cart.addToCart(productId,quantity)
       document.querySelector(".cart-quantity").innerText = localStorage.getItem('TotalItems')
       })
+    }
   )
 }
 
