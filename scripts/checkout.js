@@ -5,20 +5,43 @@ import { loadProducts, loadProductsFetch } from '../data/products.js'
 import {loadCart} from '../data/cart-class.js'
 
 
-Promise.all([
-    loadProductsFetch(),
-    new Promise((resolve)=>{
+
+async function loadPage(){
+    
+
+    await loadProductsFetch()
+
+    await new Promise((resolve)=>{
         loadCart(()=>{
             resolve()
         })
     })
-])
-.then((cosas)=>{
-    console.log(cosas)
     renderHeader()
     renderOrdersSummary()
     renderPaymentSummary()
-})
+}
+
+loadPage()
+
+
+
+
+// Otra manera de hacer las cosas...
+
+// Promise.all([
+//     loadProductsFetch(),
+//     new Promise((resolve)=>{
+//         loadCart(()=>{
+//             resolve()
+//         })
+//     })
+// ])
+// .then((cosas)=>{
+    //     console.log(cosas)
+    //     renderHeader()
+    // renderOrdersSummary()
+    // renderPaymentSummary()
+// })
 
 
 
