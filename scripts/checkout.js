@@ -7,15 +7,22 @@ import {loadCart} from '../data/cart-class.js'
 
 
 async function loadPage(){
-    
+    try{
+        // throw('error 1')
+        await loadProductsFetch()
 
-    await loadProductsFetch()
-
-    await new Promise((resolve)=>{
-        loadCart(()=>{
-            resolve()
+        await new Promise((resolve,reject)=>{
+            // throw('error 2')
+            loadCart(()=>{
+                // reject('error 3')
+                resolve()
+            })
         })
-    })
+    } catch (error){
+        console.log('Unexpected error please try agaian later')
+    }
+
+    
     renderHeader()
     renderOrdersSummary()
     renderPaymentSummary()
