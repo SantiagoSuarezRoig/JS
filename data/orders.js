@@ -1,4 +1,4 @@
-import {loadProductsFetch,productOfId } from "./products.js"
+import {loadProductsFetch, productOfId } from "./products.js"
 import { formatCurrency } from "../scripts/utils/money.js"
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import { Carrito } from "./cart-class.js";
@@ -7,11 +7,12 @@ import { Carrito } from "./cart-class.js";
 
 
 let cart = new Carrito('cart','TotalItems')
-
-export const orders = JSON.parse(localStorage.getItem('orders')) || []
-
+export let orders = JSON.parse(localStorage.getItem('orders')) || [];
 
 
+export function renderOrders(){
+    orders = JSON.parse(localStorage.getItem('orders')) || []
+}
 
 
 export function addOrder(order){
@@ -23,16 +24,41 @@ function saveToStorage(){
     localStorage.setItem('orders',JSON.stringify(orders))
 }
 
+export function ProductOfOrder(idProduct,idOrder){
+    let i = 0
+    while(orders[i].id != idOrder)
+        i++
+    
+    let j = 0
+
+    while(orders[i].products[j].productId != idProduct)
+        j++
+
+    let exactProduct = orders[i].products[j]
+
+    return exactProduct
+}
+
+
+
+
 function renderCartQuantity() {
     document.querySelector('.js-amount-of-items').innerText
     = localStorage.getItem('TotalItems')
 }
 
 
+function buySignal(id){
+    document.querySelector(`.js-buyAgainText-${id}`).innerText = 'Added'
+    return setTimeout(()=>{
+        document.querySelector(`.js-buyAgainText-${id}`).innerText = 'Buy it again'
+    },2000)
+}
 
 
 function formHtmlordersdetails(order){
     let HTML = ``
+    let orderId = order.id
     order.products.forEach(product => {
         HTML += `
             <div class="product-image-container">
@@ -60,7 +86,7 @@ function formHtmlordersdetails(order){
             </div>
 
             <div class="product-actions">
-              <a href="tracking.html">
+              <a href="tracking.html?orderId=${orderId}&productId=${product.productId}">
                 <button class="track-package-button button-secondary">
                   Track package
                 </button>
@@ -71,14 +97,8 @@ function formHtmlordersdetails(order){
     return HTML
 }
 
-function buySignal(id){
-    document.querySelector(`.js-buyAgainText-${id}`).innerText = 'Added'
-    return setTimeout(()=>{
-        document.querySelector(`.js-buyAgainText-${id}`).innerText = 'Buy it again'
-    },2000)
-}
 
-async function renderOrders(){
+async function renderOrdersHTML(){
     await loadProductsFetch()
     renderCartQuantity()
 
@@ -128,8 +148,8 @@ async function renderOrders(){
 }
 
 
-
 renderOrders()
+renderOrdersHTML()
 
 
 
