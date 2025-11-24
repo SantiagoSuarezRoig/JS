@@ -51,26 +51,26 @@ export function renderPaymentSummary(){
   
   document.querySelector('.js-placeOrder-Button').addEventListener('click', async()=>{
     try{  
-      const response = await fetch('https://supersimplebackend.dev/orders',{
+        const response = await fetch('https://supersimplebackend.dev/orders',{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          cart: Cart
-        })
+        body: JSON.stringify({cart: Cart})
       })
 
       const order = await response.json()
       addOrder(order)
       
     }catch(error){
-        console.log('Unexpected problem happened')
-      }
-      
-      
-    window.location.href = 'orders.html'
-  })
+      console.log('Unexpected problem happened')
+    }
 
+    
+    
+    window.location.href = 'orders.html'
+    
+  })
+  
 }
 
