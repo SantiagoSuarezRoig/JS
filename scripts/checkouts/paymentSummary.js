@@ -3,6 +3,7 @@ import {formatCurrency} from '../utils/money.js'
 import { orders,addOrder } from '../../data/orders.js'
 
 
+
 export function renderPaymentSummary(){
   let Cart = new Carrito('cart','TotalItems')
   let totalEnvios = Cart.calculateHandlingMoney()
@@ -61,6 +62,7 @@ export function renderPaymentSummary(){
 
       const order = await response.json()
       addOrder(order)
+      Cart.emptyCart()
       
     }catch(error){
       console.log('Unexpected problem happened')

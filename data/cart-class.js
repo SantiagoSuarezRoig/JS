@@ -36,6 +36,7 @@ export class Carrito {
 
     addToCart(productId,quantity){
         let i = 0
+        quantity = parseInt(quantity)
         while(i < this.cartItems.length && this.cartItems[i].productId != productId)
             i++
         
@@ -107,6 +108,12 @@ export class Carrito {
 
         this.cartItems[i].deliveryOptionId = deliveryOption
 
+        this.saveToStorage()
+    }
+
+    emptyCart(){
+        this.totalItems = 0;
+        this.cartItems = []
         this.saveToStorage()
     }
 

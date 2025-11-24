@@ -102,12 +102,14 @@ export function loadProductsFetch(){
     if(productDetails.type == 'Electrodomestic')
       return new Appliance(productDetails)
     return new Product(productDetails)})
+
   }).catch(()=>{
     console.log('Unexpected error please try again later')
   })
 
   return promise
 }
+
 
 
 

@@ -18,6 +18,7 @@ async function loadPage(){
                 resolve()
             })
         })
+        
     } catch (error){
         console.log('Unexpected error please try agaian later')
     }
