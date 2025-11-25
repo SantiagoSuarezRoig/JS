@@ -8,7 +8,7 @@ const url = new URL(window.location.href)
 let productId = url.searchParams.get('productId')
 let orderId = url.searchParams.get('orderId')
 
-let product = ProductOfOrder(productId,orderId)
+let product = ProductOfOrder(productId,orderId)[0]
 
 
 
@@ -16,6 +16,7 @@ async function renderTracking(){
  
     await loadProductsFetch()
     
+    dayjs(product.estimatedDeliveryTime)
     let HTML;
     HTML = `
         <a class="back-to-orders-link link-primary" href="orders.html">
@@ -49,10 +50,13 @@ async function renderTracking(){
         </div>
 
         <div class="progress-bar-container">
-          <div class="progress-bar"></div>
+          <div class="progress-bar" style=></div>
         </div>
     `
-    document.querySelector('.order-tracking').innerHTML = HTML 
+    document.querySelector('.order-tracking').innerHTML = HTML
+    document.querySelector('.cart-quantity').innerText = localStorage.getItem('TotalItems') || ''
+    document.querySelector('.progress-bar').
+
 }
-document.querySelector('.cart-quantity').innerText = localStorage.getItem('TotalItems') || ''
+
 renderTracking()

@@ -121,23 +121,26 @@ export class Carrito {
 
 
 
-export function loadCart(fun){
-  const xhr = new XMLHttpRequest() ;
-
-  xhr.addEventListener('load',()=>{
-      console.log(xhr.response)
-      fun()
-  })
-  xhr.open('GET','https://supersimplebackend.dev/cart')
-  xhr.send()
-}
-
 export async function loadCartFetch(){
     const promise = await fetch('https://supersimplebackend.dev/cart')
     const text  = await promise.text()
     console.log(text)
     return text
 }
+
+
+
+// export function loadCart(fun){
+//   const xhr = new XMLHttpRequest() ;
+
+//   xhr.addEventListener('load',()=>{
+//       console.log(xhr.response)
+//       fun()
+//   })
+//   xhr.open('GET','https://supersimplebackend.dev/cart')
+//   xhr.send()
+// }
+
 // export function loadCartFetch(){
 //     let promise = fetch('https://supersimplebackend.dev/cart').
 //     then(async(response) =>{

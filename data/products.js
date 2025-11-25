@@ -92,20 +92,21 @@ export let products = []
 
 
 
-export async function loadProductsFetch(){
-  const promise = await fetch('https://supersimplebackend.dev/products')
-  const products_ = await promise.json() 
+// export async function loadProductsFetch(){
+//   const promise = await fetch('https://supersimplebackend.dev/products')
+//   const products_ = await promise.json() 
 
-  products = products_.map((productDetails)=>{
-    if(productDetails.type == 'clothing')
-      return new Clothing(productDetails)
-    if(productDetails.type == 'Electrodomestic')
-      return new Appliance(productDetails)
-    return new Product(productDetails)})
-  console.log('LoadProducts')
-  
-  return products_
-}
+//   products = products_.map((productDetails)=>{
+//     if(productDetails.type == 'clothing')
+//       return new Clothing(productDetails)
+//     if(productDetails.type == 'Electrodomestic')
+//       return new Appliance(productDetails)
+//     return new Product(productDetails)})
+    
+//   console.log('LoadProducts')
+
+//   return products_
+// }
 
 
 // export function loadProducts(fun){
@@ -135,24 +136,24 @@ export async function loadProductsFetch(){
 
 
 
-// export function loadProductsFetch(){
-//   let promise = fetch('https://supersimplebackend.dev/products').
-//   then((response)=>{
-//     return response.json();
-//   }).
-//   then((productsData)=>{
-//     products = productsData.map((productDetails)=>{
-//     if(productDetails.type == 'clothing')
-//       return new Clothing(productDetails)
-//     if(productDetails.type == 'Electrodomestic')
-//       return new Appliance(productDetails)
-//     return new Product(productDetails)})
-//   }).catch(()=>{
-//     console.log('Unexpected error please try again later')
-//   })
+export function loadProductsFetch(){
+  let promise = fetch('https://supersimplebackend.dev/products').
+  then((response)=>{
+    return response.json();
+  }).
+  then((productsData)=>{
+    products = productsData.map((productDetails)=>{
+    if(productDetails.type == 'clothing')
+      return new Clothing(productDetails)
+    if(productDetails.type == 'Electrodomestic')
+      return new Appliance(productDetails)
+    return new Product(productDetails)})
+  }).catch(()=>{
+    console.log('Unexpected error please try again later')
+  })
   
-//   return promise
-// }
+  return promise
+}
 
 
 

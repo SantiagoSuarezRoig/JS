@@ -9,16 +9,10 @@ async function loadPage(){
   }catch(error){
     console.log('Error en LoadProductsFetch()')
   }
-
   renderProductsGrid()
 }
 
-
-
-
-
-
-
+loadPage()
 
 
 function BuySignal(productId){
@@ -116,6 +110,5 @@ function renderProductsGrid(){
 }
 
 
-loadPage()
 
 

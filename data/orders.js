@@ -7,9 +7,10 @@ import { Carrito } from "./cart-class.js";
 
 
 let cart = new Carrito('cart','TotalItems')
+
+
+
 const orders = JSON.parse(localStorage.getItem('orders')) || [];
-
-
 
 
 export function addOrder(order){
@@ -33,15 +34,17 @@ export function ProductOfOrder(idProduct,idOrder){
 
     let exactProduct = orders[i].products[j]
 
-    return exactProduct
+    let productAndOrder = [exactProduct,orders[i],]
+
+    return productAndOrder
 }
 
 
 
 
 function renderCartQuantity() {
-    document.querySelector('.js-amount-of-items').innerText
-    = localStorage.getItem('TotalItems')
+  if(document.querySelector('.js-amount-of-items'))
+    document.querySelector('.js-amount-of-items').innerText = localStorage.getItem('TotalItems')
 }
 
 
@@ -127,7 +130,9 @@ async function renderOrdersHTML(){
         </div>
         `
     })
-    document.querySelector('.js-orders-grid').innerHTML = ordersHTML
+
+    if(document.querySelector('.js-orders-grid'))
+      document.querySelector('.js-orders-grid').innerHTML = ordersHTML
 
     
     document.querySelectorAll('.js-buy-Again-button')
