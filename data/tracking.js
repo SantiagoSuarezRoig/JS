@@ -9,6 +9,14 @@ let productId = url.searchParams.get('productId')
 let orderId = url.searchParams.get('orderId')
 
 let product = ProductOfOrder(productId,orderId)[0]
+let order = ProductOfOrder(productId,orderId)[1]
+
+let today = dayjs()
+const orderTime = dayjs(order.orderTime);
+const deliveryTime = dayjs(product.estimatedDeliveryTime);
+const percentProgress = ((today - orderTime) / (deliveryTime - orderTime)) * 100;
+
+
 
 
 
@@ -38,24 +46,23 @@ async function renderTracking(){
         <img class="product-image" src=${productOfId(productId).image}>
 
         <div class="progress-labels-container">
-          <div class="progress-label">
+          <div class="progress-label ${percentProgress<50 ? "current-status" : ''} ">
             Preparing
           </div>
-          <div class="progress-label current-status">
+          <div class="progress-label ${percentProgress >= 50 && percentProgress<100 ? "current-status" : ''}">
             Shipped
           </div>
-          <div class="progress-label">
+          <div class="progress-label ${percentProgress>=100 ? "current-status" : ''} ">
             Delivered
           </div>
         </div>
 
         <div class="progress-bar-container">
-          <div class="progress-bar" style=></div>
+          <div class="progress-bar" style="width:${percentProgress}%"></div>
         </div>
     `
     document.querySelector('.order-tracking').innerHTML = HTML
     document.querySelector('.cart-quantity').innerText = localStorage.getItem('TotalItems') || ''
-    document.querySelector('.progress-bar').
 
 }
 
