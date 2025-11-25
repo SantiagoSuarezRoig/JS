@@ -1,15 +1,22 @@
 import {Carrito} from '../data/cart-class.js' ; 
-import {products,loadProducts} from '../data/products.js' ;
+import {products,loadProductsFetch} from '../data/products.js' ;
 
 
+async function loadPage(){
+  try{
+    await loadProductsFetch()
 
-new Promise((resolve)=>{
-  loadProducts(()=>{
-    resolve()
-  })
-}).then(()=>{
+  }catch(error){
+    console.log('Error en LoadProductsFetch()')
+  }
+
   renderProductsGrid()
-})
+}
+
+
+
+
+
 
 
 
@@ -109,6 +116,6 @@ function renderProductsGrid(){
 }
 
 
-
+loadPage()
 
 

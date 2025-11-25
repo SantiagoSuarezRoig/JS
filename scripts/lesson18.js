@@ -65,9 +65,16 @@ async function PostToNowhere18f(){
         if(response.status >= 400)
             throw response
 
+        const text = await response.text();
+        console.log(text);
+
     }catch(error){
-        if(error.status === 400)
-            console.log(await error.json())     
+        if (error.status === 400) {
+            const errorMessage = await error.json();
+            console.log(errorMessage);
+          } else {
+            console.log('Network error. Please try again later.');
+          }
     }
 }
 

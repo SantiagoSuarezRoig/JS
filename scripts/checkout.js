@@ -2,24 +2,14 @@ import {renderOrdersSummary} from '../scripts/checkouts/orderSummary.js'
 import {renderPaymentSummary} from '../scripts/checkouts/paymentSummary.js'
 import {renderHeader} from '../scripts/checkouts/header.js'
 import { loadProductsFetch } from '../data/products.js'
-import {loadCart} from '../data/cart-class.js'
-import './lesson18.js'
+import {loadCartFetch} from '../data/cart-class.js'
 
 
 
 async function loadPage(){
     try{
-        // throw('error 1')
         await loadProductsFetch()
-
-        await new Promise((resolve,reject)=>{
-            // throw('error 2')
-            loadCart(()=>{
-                // reject('error 3')
-                resolve()
-            })
-        })
-        
+        await loadCartFetch()
     } catch (error){
         console.log('Unexpected error please try agaian later')
     }
@@ -31,6 +21,34 @@ async function loadPage(){
 }
 
 loadPage()
+
+
+
+
+// async function loadPage(){
+//     try{
+//         // throw('error 1')
+//         await loadProductsFetch()
+
+//         await new Promise((resolve,reject)=>{
+//             // throw('error 2')
+//             loadCart(()=>{
+//                 // reject('error 3')
+//                 resolve()
+//             })
+//         })
+        
+//     } catch (error){
+//         console.log('Unexpected error please try agaian later')
+//     }
+
+
+//     renderHeader()
+//     renderOrdersSummary()
+//     renderPaymentSummary()
+// }
+
+
 
 
 

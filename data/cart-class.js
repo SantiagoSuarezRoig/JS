@@ -132,4 +132,19 @@ export function loadCart(fun){
   xhr.send()
 }
 
-
+export async function loadCartFetch(){
+    const promise = await fetch('https://supersimplebackend.dev/cart')
+    const text  = await promise.text()
+    console.log(text)
+    return text
+}
+// export function loadCartFetch(){
+//     let promise = fetch('https://supersimplebackend.dev/cart').
+//     then(async(response) =>{
+//         const text = await response.text()
+//         console.log(text)
+//     }).catch(()=> 
+//         console.log('Not working bitch')
+//     )
+//     return promise
+// }

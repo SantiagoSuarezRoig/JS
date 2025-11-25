@@ -7,12 +7,9 @@ import { Carrito } from "./cart-class.js";
 
 
 let cart = new Carrito('cart','TotalItems')
-export let orders = JSON.parse(localStorage.getItem('orders')) || [];
+const orders = JSON.parse(localStorage.getItem('orders')) || [];
 
 
-export function renderOrders(){
-    orders = JSON.parse(localStorage.getItem('orders')) || []
-}
 
 
 export function addOrder(order){
@@ -148,7 +145,7 @@ async function renderOrdersHTML(){
 }
 
 
-renderOrders()
+
 renderOrdersHTML()
 
 
