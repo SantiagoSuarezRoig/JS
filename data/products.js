@@ -102,7 +102,6 @@ export function loadProductsFetch(){
     if(productDetails.type == 'Electrodomestic')
       return new Appliance(productDetails)
     return new Product(productDetails)})
-
   }).catch(()=>{
     console.log('Unexpected error please try again later')
   })
@@ -125,6 +124,7 @@ export function loadProducts(fun){
       return new Appliance(productDetails)
 
       return new Product(productDetails)})
+      
       console.log('loadProducts')
       fun()
   })
@@ -141,10 +141,5 @@ export function loadProducts(fun){
 
 
 
-
-
-// const hoy = new Date()
-// console.log(hoy)
-// console.log(hoy.toLocaleTimeString())
 
 

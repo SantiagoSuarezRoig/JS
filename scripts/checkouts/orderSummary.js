@@ -144,13 +144,11 @@ export function renderOrdersSummary(){
         ordersHTML += formHtmlOrders(productOfId(cartItem.productId),cartItem)
     })
     document.querySelector(".order-summary").innerHTML = ordersHTML
-
-
   
     document.querySelectorAll('.js-deliveryOption').
-    forEach( option =>{
-      option.addEventListener('click',()=>{
-        const {productId, deliveryOptionId} = option.dataset
+    forEach( deliveryOption =>{
+      deliveryOption.addEventListener('click',()=>{
+        const {productId, deliveryOptionId} = deliveryOption.dataset
         Cart.updateDeliveryOption(productId,deliveryOptionId)
         renderOrdersSummary()
         renderPaymentSummary()

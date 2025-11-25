@@ -3,6 +3,7 @@ import {renderPaymentSummary} from '../scripts/checkouts/paymentSummary.js'
 import {renderHeader} from '../scripts/checkouts/header.js'
 import { loadProductsFetch } from '../data/products.js'
 import {loadCart} from '../data/cart-class.js'
+import './lesson18.js'
 
 
 
@@ -23,7 +24,7 @@ async function loadPage(){
         console.log('Unexpected error please try agaian later')
     }
 
-    
+
     renderHeader()
     renderOrdersSummary()
     renderPaymentSummary()

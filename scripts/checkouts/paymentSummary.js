@@ -1,6 +1,6 @@
 import {Carrito} from '../../data/cart-class.js'
 import {formatCurrency} from '../utils/money.js'
-import { orders,addOrder } from '../../data/orders.js'
+import { addOrder } from '../../data/orders.js'
 
 
 
@@ -63,14 +63,12 @@ export function renderPaymentSummary(){
       const order = await response.json()
       addOrder(order)
       Cart.emptyCart()
-      
+      window.location.href = 'orders.html'
+            
     }catch(error){
       console.log('Unexpected problem happened')
     }
 
-    
-    
-    window.location.href = 'orders.html'
     
   })
   

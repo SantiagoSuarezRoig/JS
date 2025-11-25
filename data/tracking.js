@@ -54,5 +54,5 @@ async function renderTracking(){
     `
     document.querySelector('.order-tracking').innerHTML = HTML 
 }
-
+document.querySelector('.cart-quantity').innerText = localStorage.getItem('TotalItems') || ''
 renderTracking()
