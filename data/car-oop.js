@@ -93,7 +93,6 @@ class RaceCar extends Car {
 
 let auto1 = new Car('Toyota','Corolla')
 let auto2 = new Car('Tesla','Model 3')
-
 let autote = new RaceCar('McLaren','F1')
 
 
