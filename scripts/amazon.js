@@ -9,6 +9,7 @@ loadProducts(renderProductsGrid)
 let desaparicionAddButton = 0
 function BuySignal(productId){
   clearTimeout(desaparicionAddButton)
+  console.log('No me rompas los huevos papa')
   document.querySelector(`.js-added-to-cart-${productId}`).classList.add("addedOpacity")
   desaparicionAddButton =
     setTimeout(()=>document.querySelector(`.js-added-to-cart-${productId}`).classList.remove("addedOpacity"),2000)
