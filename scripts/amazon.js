@@ -9,6 +9,7 @@ async function loadPage(){
   }catch(error){
     console.log('Error en LoadProductsFetch()')
   }
+  console.log('mi loco')
   renderProductsMyVersion()
 }
 
