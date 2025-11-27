@@ -1,7 +1,8 @@
 import {renderOrdersSummary} from '../../scripts/checkouts/orderSummary.js'
 import {Carrito} from '../../data/cart-class.js'
-import {loadProductsFetch } from '../../data/products.js'
-
+import { loadProducts, productOfId } from '../../data/products.js'
+import { deliveryOptions } from '../../data/deliveryOptions.js'
+import { cart } from '../../data/cart.js'
 
 
 describe('test suite: renderOrderSummary',()=>{
@@ -9,8 +10,10 @@ describe('test suite: renderOrderSummary',()=>{
     let productId2 = "6b07d4e7-f540-454e-8a1e-363f25dbae7d"
     
 
-    beforeAll(async()=>{
-        await loadProductsFetch()
+    beforeAll((done)=>{
+        loadProducts(()=>{
+            done();
+        })
     })
 
     beforeEach(()=>{
@@ -32,7 +35,6 @@ describe('test suite: renderOrderSummary',()=>{
     })
 
     it('displays the cart',()=>{
-
         expect(document.querySelector(`.js-product-name-${productId1}`).innerText)
         .toEqual('Electric Glass and Steel Hot Tea Water Kettle - 1.7-Liter')
 
@@ -51,8 +53,9 @@ describe('test suite: renderOrderSummary',()=>{
     })
 
 
-    it('removes a product', ()=>{
+    it('removes a product',()=>{
         
+
         document.querySelector(`.js-delete-link-${productId1}`).click()
 
         let Cart = new Carrito('cart','TotalItems')
@@ -80,6 +83,7 @@ describe('test suite: renderOrderSummary',()=>{
 
 
     it('Update the delivery option correctly',()=>{
+
         document.querySelector(`.js-product-delivery-option-${productId1}-3`).click()
 0
         let Cart = new Carrito('cart','TotalItems')

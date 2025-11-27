@@ -36,7 +36,6 @@ export class Carrito {
 
     addToCart(productId,quantity){
         let i = 0
-        quantity = parseInt(quantity)
         while(i < this.cartItems.length && this.cartItems[i].productId != productId)
             i++
         
@@ -111,43 +110,8 @@ export class Carrito {
         this.saveToStorage()
     }
 
-    emptyCart(){
-        this.totalItems = 0;
-        this.cartItems = []
-        this.saveToStorage()
-    }
-
 }
 
 
 
-export async function loadCartFetch(){
-    const promise = await fetch('https://supersimplebackend.dev/cart')
-    const text  = await promise.text()
-    console.log(text)
-    return text
-}
 
-
-
-// export function loadCart(fun){
-//   const xhr = new XMLHttpRequest() ;
-
-//   xhr.addEventListener('load',()=>{
-//       console.log(xhr.response)
-//       fun()
-//   })
-//   xhr.open('GET','https://supersimplebackend.dev/cart')
-//   xhr.send()
-// }
-
-// export function loadCartFetch(){
-//     let promise = fetch('https://supersimplebackend.dev/cart').
-//     then(async(response) =>{
-//         const text = await response.text()
-//         console.log(text)
-//     }).catch(()=> 
-//         console.log('Not working bitch')
-//     )
-//     return promise
-// }

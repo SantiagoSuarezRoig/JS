@@ -16,7 +16,6 @@ export class Product{
   name;
   rating;
   priceCents;
-  keyWords;
   
   constructor(productDetails){
     this.id = productDetails.id;
@@ -24,7 +23,6 @@ export class Product{
     this.name = productDetails.name
     this.rating = productDetails.rating
     this.priceCents = productDetails.priceCents
-    this.keyWords = productDetails.keywords
   }
 
 
@@ -91,77 +89,34 @@ export class Appliance extends Product{
 
 export let products = []
 
+export function loadProducts(fun){
+  const xhr = new XMLHttpRequest() ;
 
-
-
-export async function loadProductsFetch(){
-  const promise = await fetch('https://supersimplebackend.dev/products')
-  const products_ = await promise.json() 
-  products = products_.map((productDetails)=>{
+  xhr.addEventListener('load',()=>{
+      products = JSON.parse(xhr.response).map((productDetails)=>{
     if(productDetails.type == 'clothing')
       return new Clothing(productDetails)
     if(productDetails.type == 'Electrodomestic')
       return new Appliance(productDetails)
-    return new Product(productDetails)})
-  
-  console.log('LoadProducts')
 
-  return products_
+      return new Product(productDetails)})
+      
+      fun()
+  })
+
+  xhr.open('GET','https://supersimplebackend.dev/products')
+  xhr.send()
 }
 
 
-// export function loadProducts(fun){
-//   const xhr = new XMLHttpRequest() ;
-
-//   xhr.addEventListener('load',()=>{
-//       products = JSON.parse(xhr.response).map((productDetails)=>{
-//     if(productDetails.type == 'clothing')
-//       return new Clothing(productDetails)
-
-//     if(productDetails.type == 'Electrodomestic')
-//       return new Appliance(productDetails)
-
-//       return new Product(productDetails)})
-      
-//       console.log('loadProducts')
-//       fun()
-//   })
-
-//   xhr.addEventListener('error',()=>{
-//     console.log('Unexpected error, please try again later')
-//   })
-
-//   xhr.open('GET','https://supersimplebackend.dev/products')
-//   xhr.send()
-// }
-
-
-
-// export function loadProductsFetch(){
-//   let promise = fetch('https://supersimplebackend.dev/products').
-//   then((response)=>{
-//     return response.json();
-//   }).
-//   then((productsData)=>{
-//     products = productsData.map((productDetails)=>{
-//     if(productDetails.type == 'clothing')
-//       return new Clothing(productDetails)
-//     if(productDetails.type == 'Electrodomestic')
-//       return new Appliance(productDetails)
-//     return new Product(productDetails)})
-//   }).catch(()=>{
-//     console.log('Unexpected error please try again later')
-//   })
-  
-//   return promise
-// }
 
 
 
 
 
-
-
+// const hoy = new Date()
+// console.log(hoy)
+// console.log(hoy.toLocaleTimeString())
 
 
 
