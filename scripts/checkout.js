@@ -13,7 +13,7 @@ async function loadPage(){
     } catch (error){
         console.log('Unexpected error please try agaian later')
     }
-    console.log('hola mundo')
+    console.log('last version bitch')
     renderHeader()
     renderOrdersSummary()
     renderPaymentSummary()
